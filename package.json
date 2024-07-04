@@ -1,0 +1,18 @@
+{
+  "name": "com-fs-notification-model",
+  "version": "1.2.3",
+  "description": "Full stack model for Notification System",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "rm -rf build/ && npx tsc"
+  },
+  "dependencies": {
+    "long": "^5.2.3",
+    "protobufjs": "^7.2.5"
+  },
+  "devDependencies": {
+    "protoc-gen-ts": "^0.8.5",
+    "ts-proto": "^1.138.0",
+    "typescript": "^4.9.4"
+  }
+}

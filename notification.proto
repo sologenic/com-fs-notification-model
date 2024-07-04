@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package = "./notification";
+
+import "google/protobuf/timestamp.proto";
+
+import "types/types.proto";
+import "parameters/parameters.proto";
+import "formats/formats.proto";
+
+message Key {
+    string Key = 1;
+}
+
+message Exist {
+    bool Exists = 1;
+}
+
+message TopRequest {
+    string AccountID = 1;
+    repeated notification.types.NotificationType Type = 2;
+}
+
+message UnreadRequest {
+    string AccountID = 1;
+}
+
+message UnreadResponse {
+    bool HasUnread = 1;
+}
+
+message ListRequest {
+    string AccountID = 1;
+    int64 NotificationID = 2;
+}
+
+message Notifications {
+    repeated Notification Notification = 1;
+    More More = 2;
+}
+
+message More {
+    int64 ID = 1;
+    int64 TS = 2;
+}
+
+message ReadRequest {
+    string AccountID = 1;
+    repeated string Key = 2;
+}
+
+message ReadAllRequest {
+    string AccountID = 1;
+}
+
+// Notifications can be high level: Give me NFT Like notifications on my NFTs, or low level: Let me know when collection XYZ is updated
+// The absence or presence of the ID field determines the level of notification
+message Notification {
+    string ID = 1; // Has a meaning if combined with the Type
+    string AccountID = 2;
+    notification.types.NotificationType Type = 3;
+    Message Message = 4;
+    google.protobuf.Timestamp CreatedAt = 5;
+    google.protobuf.Timestamp UpdatedAt = 6;
+    int64 NotificationID = 8; // Unique ID used for Read notifications matching. Timestamp in nanos assigned by the storage layer
+    bool Read = 9; // Default false. Used for personal messages read state, merged with Read state from message Read
+    string From = 10; // AccountID of the sender of the message (if applicable)
+    Importance Importance = 11; // Default Normal
+    repeated notification.parameters.Target Target = 12; // Default none
+    google.protobuf.Timestamp ExpiresAt = 13; // Default none, used for admin/system/marketing notifications so those can be filtered
+    google.protobuf.Timestamp ValidFrom = 14; // Default none, used for admin/system/marketing notifications so those can be filtered
+    string Key = 15; // Unique sender generated stable key (prevents duplicate notifications)
+}
+
+message Message {
+    notification.formats.Format Format = 1;
+    string Subject = 2;
+    string Body = 3;
+    repeated notification.parameters.Parameter Parameter = 4;
+}
+
+enum Importance {
+    NOT_USED1 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    NORMAL = 1;
+    IMPORTANT = 2;
+    CRITICAL = 3;
+}

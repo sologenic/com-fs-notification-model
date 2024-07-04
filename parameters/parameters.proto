@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package notification.parameters;
+
+option go_package = "github.com/sologenic/com-fs-notification-model/parameters";
+
+// TODO: update ParameterLabel and SourceType after discussion
+message Parameter {
+    ParameterLabel Label = 1;
+    string Value = 2;
+    string Source = 3;
+    SourceType SourceType = 4;
+    DataType DataType = 5;
+    FromTo FromTo = 6;
+}
+
+enum SourceType {
+    NOT_USED7 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    ADDRESS = 1;
+    WALLET = 2;
+    KYC = 3;
+}
+
+enum Target {
+    NOT_USED8 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    FIREBASE = 1;
+    WEB = 2;
+}
+
+enum ParameterLabel {
+    NOT_USED3 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    DATETIME = 1;
+    AMOUNT = 2;
+    INITIATOR  = 3;
+    DESTINATION = 4;
+    ID = 5; // Generically usable ID field
+    NAME = 6; // Generically usable NAME field
+}
+
+// Parameter types for DataEvaluation: Sadly enums have to be unique, and we want to use an enum here to limit input/settings
+// on definition level and not on code level: PT_ is used in front of the parameter type to avoid conflicts
+enum DataType {
+    NOT_USED4 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    STRING = 1;
+    NUMBER = 2;
+}
+
+// The FE needs certain information to be added by the BE enrichment process
+// This has been reduced to a From/To statement:
+// And all message historically will now be altered in the FE
+enum FromTo {
+    NOT_USED6 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    FROM = 1;
+    TO = 2;
+    CONTENT = 3;
+}

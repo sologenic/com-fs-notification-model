@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package notification;
+
+option go_package = "./notification";
+
+import "google/protobuf/Empty.proto";
+
+import "notification.proto";
+
+service NotificationService {
+    // Retrieval
+    rpc Top(TopRequest) returns (Notifications) {}
+    rpc Unread(UnreadRequest) returns (UnreadResponse) {}
+    rpc List(ListRequest) returns (Notifications) {}
+
+    // Updates
+    rpc Read(ReadRequest) returns (google.protobuf.Empty) {}
+    rpc ReadAll(ReadAllRequest) returns (google.protobuf.Empty) {}
+
+    // Message persistence endpoint
+    // Checks if message exists, if not, persists it
+    rpc Persist(Notification) returns (google.protobuf.Empty) {}
+
+    // Control
+    rpc Exists(Key) returns (Exist) {}
+}
+
