@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package notification.formats;
+
+option go_package = "github.com/sologenic/com-fs-notification-model/formats";
+
+// Base formatting of the message, used by the parsers
+enum Format {
+    NOT_USED2 = 0; // Need unique enum values for proto (C requirement, we don't use C)
+    TEXT = 1;
+    HTML = 2;
+    MARKDOWNV2 = 3;
+}
