@@ -16,6 +16,7 @@ export declare enum NotificationType {
     KYCRejected = 8,
     KYCStuck = 9,
     KYCFixed = 10,
+    KYCNotProcessableForever = 11,
     UNRECOGNIZED = -1
 }
 export declare function notificationTypeFromJSON(object: any): NotificationType;
