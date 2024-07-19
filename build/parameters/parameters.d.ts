@@ -15,6 +15,7 @@ export declare enum Target {
     NOT_USED8 = 0,
     FIREBASE = 1,
     WEB = 2,
+    EMAIL = 3,
     UNRECOGNIZED = -1
 }
 export declare function targetFromJSON(object: any): Target;

@@ -56,6 +56,7 @@ export var Target;
     Target[Target["NOT_USED8"] = 0] = "NOT_USED8";
     Target[Target["FIREBASE"] = 1] = "FIREBASE";
     Target[Target["WEB"] = 2] = "WEB";
+    Target[Target["EMAIL"] = 3] = "EMAIL";
     Target[Target["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(Target || (Target = {}));
 export function targetFromJSON(object) {
@@ -69,6 +70,9 @@ export function targetFromJSON(object) {
         case 2:
         case "WEB":
             return Target.WEB;
+        case 3:
+        case "EMAIL":
+            return Target.EMAIL;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -83,6 +87,8 @@ export function targetToJSON(object) {
             return "FIREBASE";
         case Target.WEB:
             return "WEB";
+        case Target.EMAIL:
+            return "EMAIL";
         case Target.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";

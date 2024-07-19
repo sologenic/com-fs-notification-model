@@ -60,6 +60,7 @@ export enum Target {
   NOT_USED8 = 0,
   FIREBASE = 1,
   WEB = 2,
+  EMAIL = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -74,6 +75,9 @@ export function targetFromJSON(object: any): Target {
     case 2:
     case "WEB":
       return Target.WEB;
+    case 3:
+    case "EMAIL":
+      return Target.EMAIL;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -89,6 +93,8 @@ export function targetToJSON(object: Target): string {
       return "FIREBASE";
     case Target.WEB:
       return "WEB";
+    case Target.EMAIL:
+      return "EMAIL";
     case Target.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
