@@ -24,6 +24,7 @@ export var NotificationType;
     NotificationType[NotificationType["KYCStuck"] = 9] = "KYCStuck";
     NotificationType[NotificationType["KYCFixed"] = 10] = "KYCFixed";
     NotificationType[NotificationType["KYCNotProcessableForever"] = 11] = "KYCNotProcessableForever";
+    NotificationType[NotificationType["KYCResubmissionRequested"] = 12] = "KYCResubmissionRequested";
     NotificationType[NotificationType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(NotificationType || (NotificationType = {}));
 export function notificationTypeFromJSON(object) {
@@ -64,6 +65,9 @@ export function notificationTypeFromJSON(object) {
         case 11:
         case "KYCNotProcessableForever":
             return NotificationType.KYCNotProcessableForever;
+        case 12:
+        case "KYCResubmissionRequested":
+            return NotificationType.KYCResubmissionRequested;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -96,6 +100,8 @@ export function notificationTypeToJSON(object) {
             return "KYCFixed";
         case NotificationType.KYCNotProcessableForever:
             return "KYCNotProcessableForever";
+        case NotificationType.KYCResubmissionRequested:
+            return "KYCResubmissionRequested";
         case NotificationType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";

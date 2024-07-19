@@ -26,6 +26,7 @@ export enum NotificationType {
   KYCStuck = 9,
   KYCFixed = 10,
   KYCNotProcessableForever = 11,
+  KYCResubmissionRequested = 12,
   UNRECOGNIZED = -1,
 }
 
@@ -67,6 +68,9 @@ export function notificationTypeFromJSON(object: any): NotificationType {
     case 11:
     case "KYCNotProcessableForever":
       return NotificationType.KYCNotProcessableForever;
+    case 12:
+    case "KYCResubmissionRequested":
+      return NotificationType.KYCResubmissionRequested;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -100,6 +104,8 @@ export function notificationTypeToJSON(object: NotificationType): string {
       return "KYCFixed";
     case NotificationType.KYCNotProcessableForever:
       return "KYCNotProcessableForever";
+    case NotificationType.KYCResubmissionRequested:
+      return "KYCResubmissionRequested";
     case NotificationType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
