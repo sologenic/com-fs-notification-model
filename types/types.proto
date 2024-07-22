@@ -21,4 +21,5 @@ enum NotificationType {
     KYCFixed = 10;
     KYCNotProcessableForever = 11;
     KYCResubmissionRequested = 12;
+    KYCFixRequested = 13;
 }
