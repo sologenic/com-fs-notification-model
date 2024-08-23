@@ -4,22 +4,14 @@ export declare const protobufPackage = "notification.types";
  * You will destroy the existing messages and destroy all history if you do so
  */
 export declare enum NotificationType {
-    /** NOT_USED - TODO: add more types as needed */
+    /** NOT_USED - Need unique enum values for proto (C requirement, we don't use C) */
     NOT_USED = 0,
-    Maintenance = 1,
-    Admin = 2,
-    Marketing = 3,
-    IndividualMessage = 4,
-    AccountBanned = 5,
-    AccountVerified = 6,
-    KYCApproved = 7,
-    KYCRejected = 8,
-    KYCStuck = 9,
-    KYCFixed = 10,
-    KYCNotProcessableForever = 11,
-    KYCResubmissionRequested = 12,
-    KYCFixRequested = 13,
-    KYCAdminDenied = 14,
+    Marketing = 1,
+    IndividualMessage = 2,
+    KYC = 3,
+    Account = 4,
+    Asset = 5,
+    Admin = 6,
     UNRECOGNIZED = -1
 }
 export declare function notificationTypeFromJSON(object: any): NotificationType;

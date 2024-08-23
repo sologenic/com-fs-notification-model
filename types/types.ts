@@ -13,22 +13,14 @@ export const protobufPackage = "notification.types";
  * You will destroy the existing messages and destroy all history if you do so
  */
 export enum NotificationType {
-  /** NOT_USED - TODO: add more types as needed */
+  /** NOT_USED - Need unique enum values for proto (C requirement, we don't use C) */
   NOT_USED = 0,
-  Maintenance = 1,
-  Admin = 2,
-  Marketing = 3,
-  IndividualMessage = 4,
-  AccountBanned = 5,
-  AccountVerified = 6,
-  KYCApproved = 7,
-  KYCRejected = 8,
-  KYCStuck = 9,
-  KYCFixed = 10,
-  KYCNotProcessableForever = 11,
-  KYCResubmissionRequested = 12,
-  KYCFixRequested = 13,
-  KYCAdminDenied = 14,
+  Marketing = 1,
+  IndividualMessage = 2,
+  KYC = 3,
+  Account = 4,
+  Asset = 5,
+  Admin = 6,
   UNRECOGNIZED = -1,
 }
 
@@ -38,47 +30,23 @@ export function notificationTypeFromJSON(object: any): NotificationType {
     case "NOT_USED":
       return NotificationType.NOT_USED;
     case 1:
-    case "Maintenance":
-      return NotificationType.Maintenance;
-    case 2:
-    case "Admin":
-      return NotificationType.Admin;
-    case 3:
     case "Marketing":
       return NotificationType.Marketing;
-    case 4:
+    case 2:
     case "IndividualMessage":
       return NotificationType.IndividualMessage;
+    case 3:
+    case "KYC":
+      return NotificationType.KYC;
+    case 4:
+    case "Account":
+      return NotificationType.Account;
     case 5:
-    case "AccountBanned":
-      return NotificationType.AccountBanned;
+    case "Asset":
+      return NotificationType.Asset;
     case 6:
-    case "AccountVerified":
-      return NotificationType.AccountVerified;
-    case 7:
-    case "KYCApproved":
-      return NotificationType.KYCApproved;
-    case 8:
-    case "KYCRejected":
-      return NotificationType.KYCRejected;
-    case 9:
-    case "KYCStuck":
-      return NotificationType.KYCStuck;
-    case 10:
-    case "KYCFixed":
-      return NotificationType.KYCFixed;
-    case 11:
-    case "KYCNotProcessableForever":
-      return NotificationType.KYCNotProcessableForever;
-    case 12:
-    case "KYCResubmissionRequested":
-      return NotificationType.KYCResubmissionRequested;
-    case 13:
-    case "KYCFixRequested":
-      return NotificationType.KYCFixRequested;
-    case 14:
-    case "KYCAdminDenied":
-      return NotificationType.KYCAdminDenied;
+    case "Admin":
+      return NotificationType.Admin;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -90,34 +58,18 @@ export function notificationTypeToJSON(object: NotificationType): string {
   switch (object) {
     case NotificationType.NOT_USED:
       return "NOT_USED";
-    case NotificationType.Maintenance:
-      return "Maintenance";
-    case NotificationType.Admin:
-      return "Admin";
     case NotificationType.Marketing:
       return "Marketing";
     case NotificationType.IndividualMessage:
       return "IndividualMessage";
-    case NotificationType.AccountBanned:
-      return "AccountBanned";
-    case NotificationType.AccountVerified:
-      return "AccountVerified";
-    case NotificationType.KYCApproved:
-      return "KYCApproved";
-    case NotificationType.KYCRejected:
-      return "KYCRejected";
-    case NotificationType.KYCStuck:
-      return "KYCStuck";
-    case NotificationType.KYCFixed:
-      return "KYCFixed";
-    case NotificationType.KYCNotProcessableForever:
-      return "KYCNotProcessableForever";
-    case NotificationType.KYCResubmissionRequested:
-      return "KYCResubmissionRequested";
-    case NotificationType.KYCFixRequested:
-      return "KYCFixRequested";
-    case NotificationType.KYCAdminDenied:
-      return "KYCAdminDenied";
+    case NotificationType.KYC:
+      return "KYC";
+    case NotificationType.Account:
+      return "Account";
+    case NotificationType.Asset:
+      return "Asset";
+    case NotificationType.Admin:
+      return "Admin";
     case NotificationType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
