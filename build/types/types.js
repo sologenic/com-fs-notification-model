@@ -11,14 +11,21 @@ export const protobufPackage = "notification.types";
  */
 export var NotificationType;
 (function (NotificationType) {
-    /** NOT_USED - Need unique enum values for proto (C requirement, we don't use C) */
+    /**
+     * NOT_USED - TODO: refactor => instead of sending information such as status state, we can set the type to something like
+     * USER_EMAIL, ADMIN_EMAIL, DEV_EMAIL, etc. and the email listener can fetch the record from the store to determine
+     * the status of the record and send the email accordingly
+     * 받는사람 기준으로 고려해본다 (예: 유저, 에드민, etc.), 또는 토픽 기준으로 고려해본다 (예: KYC, ACCOUNT, etc.)
+     * 참고: pulsara fs-notification-model
+     */
     NotificationType[NotificationType["NOT_USED"] = 0] = "NOT_USED";
-    NotificationType[NotificationType["Marketing"] = 1] = "Marketing";
-    NotificationType[NotificationType["IndividualMessage"] = 2] = "IndividualMessage";
-    NotificationType[NotificationType["KYC"] = 3] = "KYC";
-    NotificationType[NotificationType["Account"] = 4] = "Account";
-    NotificationType[NotificationType["Asset"] = 5] = "Asset";
-    NotificationType[NotificationType["Admin"] = 6] = "Admin";
+    NotificationType[NotificationType["Maintenance"] = 1] = "Maintenance";
+    NotificationType[NotificationType["Marketing"] = 2] = "Marketing";
+    NotificationType[NotificationType["IndividualMessage"] = 3] = "IndividualMessage";
+    NotificationType[NotificationType["KYC"] = 4] = "KYC";
+    NotificationType[NotificationType["Account"] = 5] = "Account";
+    NotificationType[NotificationType["Asset"] = 6] = "Asset";
+    NotificationType[NotificationType["Admin"] = 7] = "Admin";
     NotificationType[NotificationType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(NotificationType || (NotificationType = {}));
 export function notificationTypeFromJSON(object) {
@@ -27,21 +34,24 @@ export function notificationTypeFromJSON(object) {
         case "NOT_USED":
             return NotificationType.NOT_USED;
         case 1:
+        case "Maintenance":
+            return NotificationType.Maintenance;
+        case 2:
         case "Marketing":
             return NotificationType.Marketing;
-        case 2:
+        case 3:
         case "IndividualMessage":
             return NotificationType.IndividualMessage;
-        case 3:
+        case 4:
         case "KYC":
             return NotificationType.KYC;
-        case 4:
+        case 5:
         case "Account":
             return NotificationType.Account;
-        case 5:
+        case 6:
         case "Asset":
             return NotificationType.Asset;
-        case 6:
+        case 7:
         case "Admin":
             return NotificationType.Admin;
         case -1:
@@ -54,6 +64,8 @@ export function notificationTypeToJSON(object) {
     switch (object) {
         case NotificationType.NOT_USED:
             return "NOT_USED";
+        case NotificationType.Maintenance:
+            return "Maintenance";
         case NotificationType.Marketing:
             return "Marketing";
         case NotificationType.IndividualMessage:
