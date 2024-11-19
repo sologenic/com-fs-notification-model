@@ -7,13 +7,13 @@ import (
 
 	grpcdef "github.com/sologenic/com-fs-notification-model"
 	notificationtypes "github.com/sologenic/com-fs-notification-model/types"
-	grpcclient "github.com/sologenic/fs-utils-lib/go/grpc-client"
+	grpcclient "github.com/sologenic/com-fs-utils-lib/go/grpc-client"
 )
 
 const endpoint = "NOTIFICATION_STORE"
 
 var (
-	client     *grpcdef.NotificationServiceClient
+	client     grpcdef.NotificationServiceClient
 	grpcClient *grpcclient.GRPCClient
 )
 
@@ -25,12 +25,10 @@ localhost => No port is not local
 */
 func initClient() {
 	grpcClient = grpcclient.InitClient(endpoint)
-
-	cl := grpcdef.NewNotificationServiceClient(grpcClient.Conn)
-	client = &cl
+	client = grpcdef.NewNotificationServiceClient(grpcClient.Conn)
 }
 
-func Client() *grpcdef.NotificationServiceClient {
+func Client() grpcdef.NotificationServiceClient {
 	if client == nil {
 		initClient()
 	}
