@@ -1,6 +1,6 @@
 module github.com/sologenic/com-fs-notification-model
 
-go 1.22.5
+go 1.23.6
 
 require (
 	github.com/sologenic/com-fs-utils-lib/go/grpc-client v0.0.0-20241114183617-e622df0f57e8
