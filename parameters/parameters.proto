@@ -25,6 +25,7 @@ enum Target {
     NOT_USED8 = 0; // Need unique enum values for proto (C requirement, we don't use C)
     FIREBASE = 1;
     WEB = 2;
+    EMAIL = 3;
 }
 
 enum ParameterLabel {
