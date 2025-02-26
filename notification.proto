@@ -19,7 +19,7 @@ message Exist {
 }
 
 message TopRequest {
-    string AccountID = 1;
+    string RecipientID = 1;
     repeated notification.types.NotificationType Type = 2;
 }
 
@@ -59,7 +59,7 @@ message ReadAllRequest {
 // The absence or presence of the ID field determines the level of notification
 message Notification {
     string ID = 1; // Has a meaning if combined with the Type
-    string AccountID = 2;
+    optional string RecipientID = 2; // Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all
     notification.types.NotificationType Type = 3;
     Message Message = 4;
     google.protobuf.Timestamp CreatedAt = 5;

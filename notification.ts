@@ -69,7 +69,7 @@ export interface Exist {
 }
 
 export interface TopRequest {
-  AccountID: string;
+  RecipientID: string;
   Type: NotificationType[];
 }
 
@@ -112,7 +112,8 @@ export interface ReadAllRequest {
 export interface Notification {
   /** Has a meaning if combined with the Type */
   ID: string;
-  AccountID: string;
+  /** Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all */
+  RecipientID?: string | undefined;
   Type: NotificationType;
   Message: Message | undefined;
   CreatedAt: Date | undefined;
@@ -263,13 +264,13 @@ export const Exist = {
 };
 
 function createBaseTopRequest(): TopRequest {
-  return { AccountID: "", Type: [] };
+  return { RecipientID: "", Type: [] };
 }
 
 export const TopRequest = {
   encode(message: TopRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.AccountID !== "") {
-      writer.uint32(10).string(message.AccountID);
+    if (message.RecipientID !== "") {
+      writer.uint32(10).string(message.RecipientID);
     }
     writer.uint32(18).fork();
     for (const v of message.Type) {
@@ -291,7 +292,7 @@ export const TopRequest = {
             break;
           }
 
-          message.AccountID = reader.string();
+          message.RecipientID = reader.string();
           continue;
         case 2:
           if (tag === 16) {
@@ -321,15 +322,15 @@ export const TopRequest = {
 
   fromJSON(object: any): TopRequest {
     return {
-      AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+      RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
       Type: globalThis.Array.isArray(object?.Type) ? object.Type.map((e: any) => notificationTypeFromJSON(e)) : [],
     };
   },
 
   toJSON(message: TopRequest): unknown {
     const obj: any = {};
-    if (message.AccountID !== "") {
-      obj.AccountID = message.AccountID;
+    if (message.RecipientID !== "") {
+      obj.RecipientID = message.RecipientID;
     }
     if (message.Type?.length) {
       obj.Type = message.Type.map((e) => notificationTypeToJSON(e));
@@ -342,7 +343,7 @@ export const TopRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<TopRequest>, I>>(object: I): TopRequest {
     const message = createBaseTopRequest();
-    message.AccountID = object.AccountID ?? "";
+    message.RecipientID = object.RecipientID ?? "";
     message.Type = object.Type?.map((e) => e) || [];
     return message;
   },
@@ -820,7 +821,7 @@ export const ReadAllRequest = {
 function createBaseNotification(): Notification {
   return {
     ID: "",
-    AccountID: "",
+    RecipientID: undefined,
     Type: 0,
     Message: undefined,
     CreatedAt: undefined,
@@ -841,8 +842,8 @@ export const Notification = {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
-    if (message.AccountID !== "") {
-      writer.uint32(18).string(message.AccountID);
+    if (message.RecipientID !== undefined) {
+      writer.uint32(18).string(message.RecipientID);
     }
     if (message.Type !== 0) {
       writer.uint32(24).int32(message.Type);
@@ -904,7 +905,7 @@ export const Notification = {
             break;
           }
 
-          message.AccountID = reader.string();
+          message.RecipientID = reader.string();
           continue;
         case 3:
           if (tag !== 24) {
@@ -1012,7 +1013,7 @@ export const Notification = {
   fromJSON(object: any): Notification {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-      AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+      RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : undefined,
       Type: isSet(object.Type) ? notificationTypeFromJSON(object.Type) : 0,
       Message: isSet(object.Message) ? Message.fromJSON(object.Message) : undefined,
       CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
@@ -1033,8 +1034,8 @@ export const Notification = {
     if (message.ID !== "") {
       obj.ID = message.ID;
     }
-    if (message.AccountID !== "") {
-      obj.AccountID = message.AccountID;
+    if (message.RecipientID !== undefined) {
+      obj.RecipientID = message.RecipientID;
     }
     if (message.Type !== 0) {
       obj.Type = notificationTypeToJSON(message.Type);
@@ -1081,7 +1082,7 @@ export const Notification = {
   fromPartial<I extends Exact<DeepPartial<Notification>, I>>(object: I): Notification {
     const message = createBaseNotification();
     message.ID = object.ID ?? "";
-    message.AccountID = object.AccountID ?? "";
+    message.RecipientID = object.RecipientID ?? undefined;
     message.Type = object.Type ?? 0;
     message.Message = (object.Message !== undefined && object.Message !== null)
       ? Message.fromPartial(object.Message)
