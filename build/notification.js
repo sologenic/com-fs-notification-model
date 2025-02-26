@@ -235,12 +235,12 @@ export const TopRequest = {
     },
 };
 function createBaseUnreadRequest() {
-    return { AccountID: "" };
+    return { RecipientID: "" };
 }
 export const UnreadRequest = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.AccountID !== "") {
-            writer.uint32(10).string(message.AccountID);
+        if (message.RecipientID !== "") {
+            writer.uint32(10).string(message.RecipientID);
         }
         return writer;
     },
@@ -255,7 +255,7 @@ export const UnreadRequest = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -266,12 +266,12 @@ export const UnreadRequest = {
         return message;
     },
     fromJSON(object) {
-        return { AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "" };
+        return { RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "" };
     },
     toJSON(message) {
         const obj = {};
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== "") {
+            obj.RecipientID = message.RecipientID;
         }
         return obj;
     },
@@ -281,7 +281,7 @@ export const UnreadRequest = {
     fromPartial(object) {
         var _a;
         const message = createBaseUnreadRequest();
-        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
+        message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
@@ -337,12 +337,12 @@ export const UnreadResponse = {
     },
 };
 function createBaseListRequest() {
-    return { AccountID: "", NotificationID: 0 };
+    return { RecipientID: "", NotificationID: 0 };
 }
 export const ListRequest = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.AccountID !== "") {
-            writer.uint32(10).string(message.AccountID);
+        if (message.RecipientID !== "") {
+            writer.uint32(10).string(message.RecipientID);
         }
         if (message.NotificationID !== 0) {
             writer.uint32(16).int64(message.NotificationID);
@@ -360,7 +360,7 @@ export const ListRequest = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
                 case 2:
                     if (tag !== 16) {
@@ -378,14 +378,14 @@ export const ListRequest = {
     },
     fromJSON(object) {
         return {
-            AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+            RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             NotificationID: isSet(object.NotificationID) ? globalThis.Number(object.NotificationID) : 0,
         };
     },
     toJSON(message) {
         const obj = {};
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== "") {
+            obj.RecipientID = message.RecipientID;
         }
         if (message.NotificationID !== 0) {
             obj.NotificationID = Math.round(message.NotificationID);
@@ -398,7 +398,7 @@ export const ListRequest = {
     fromPartial(object) {
         var _a, _b;
         const message = createBaseListRequest();
-        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
+        message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.NotificationID = (_b = object.NotificationID) !== null && _b !== void 0 ? _b : 0;
         return message;
     },
@@ -541,12 +541,12 @@ export const More = {
     },
 };
 function createBaseReadRequest() {
-    return { AccountID: "", Key: [] };
+    return { RecipientID: "", Key: [] };
 }
 export const ReadRequest = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.AccountID !== "") {
-            writer.uint32(10).string(message.AccountID);
+        if (message.RecipientID !== "") {
+            writer.uint32(10).string(message.RecipientID);
         }
         for (const v of message.Key) {
             writer.uint32(18).string(v);
@@ -564,7 +564,7 @@ export const ReadRequest = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
                 case 2:
                     if (tag !== 18) {
@@ -582,15 +582,15 @@ export const ReadRequest = {
     },
     fromJSON(object) {
         return {
-            AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+            RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             Key: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Key) ? object.Key.map((e) => globalThis.String(e)) : [],
         };
     },
     toJSON(message) {
         var _a;
         const obj = {};
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== "") {
+            obj.RecipientID = message.RecipientID;
         }
         if ((_a = message.Key) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Key = message.Key;
@@ -603,18 +603,18 @@ export const ReadRequest = {
     fromPartial(object) {
         var _a, _b;
         const message = createBaseReadRequest();
-        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
+        message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.Key = ((_b = object.Key) === null || _b === void 0 ? void 0 : _b.map((e) => e)) || [];
         return message;
     },
 };
 function createBaseReadAllRequest() {
-    return { AccountID: "" };
+    return { RecipientID: "" };
 }
 export const ReadAllRequest = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.AccountID !== "") {
-            writer.uint32(10).string(message.AccountID);
+        if (message.RecipientID !== "") {
+            writer.uint32(10).string(message.RecipientID);
         }
         return writer;
     },
@@ -629,7 +629,7 @@ export const ReadAllRequest = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -640,12 +640,12 @@ export const ReadAllRequest = {
         return message;
     },
     fromJSON(object) {
-        return { AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "" };
+        return { RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "" };
     },
     toJSON(message) {
         const obj = {};
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== "") {
+            obj.RecipientID = message.RecipientID;
         }
         return obj;
     },
@@ -655,7 +655,7 @@ export const ReadAllRequest = {
     fromPartial(object) {
         var _a;
         const message = createBaseReadAllRequest();
-        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
+        message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };

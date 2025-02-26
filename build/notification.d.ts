@@ -24,13 +24,13 @@ export interface TopRequest {
     Type: NotificationType[];
 }
 export interface UnreadRequest {
-    AccountID: string;
+    RecipientID: string;
 }
 export interface UnreadResponse {
     HasUnread: boolean;
 }
 export interface ListRequest {
-    AccountID: string;
+    RecipientID: string;
     NotificationID: number;
 }
 export interface Notifications {
@@ -42,11 +42,11 @@ export interface More {
     TS: number;
 }
 export interface ReadRequest {
-    AccountID: string;
+    RecipientID: string;
     Key: string[];
 }
 export interface ReadAllRequest {
-    AccountID: string;
+    RecipientID: string;
 }
 /**
  * Notifications can be high level: Give me NFT Like notifications on my NFTs, or low level: Let me know when collection XYZ is updated
@@ -142,15 +142,15 @@ export declare const UnreadRequest: {
     fromJSON(object: any): UnreadRequest;
     toJSON(message: UnreadRequest): unknown;
     create<I extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
     } & {
-        AccountID?: string | undefined;
-    } & { [K in Exclude<keyof I, "AccountID">]: never; }>(base?: I | undefined): UnreadRequest;
+        RecipientID?: string | undefined;
+    } & { [K in Exclude<keyof I, "RecipientID">]: never; }>(base?: I | undefined): UnreadRequest;
     fromPartial<I_1 extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
     } & {
-        AccountID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, "AccountID">]: never; }>(object: I_1): UnreadRequest;
+        RecipientID?: string | undefined;
+    } & { [K_1 in Exclude<keyof I_1, "RecipientID">]: never; }>(object: I_1): UnreadRequest;
 };
 export declare const UnreadResponse: {
     encode(message: UnreadResponse, writer?: _m0.Writer): _m0.Writer;
@@ -174,17 +174,17 @@ export declare const ListRequest: {
     fromJSON(object: any): ListRequest;
     toJSON(message: ListRequest): unknown;
     create<I extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         NotificationID?: number | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         NotificationID?: number | undefined;
     } & { [K in Exclude<keyof I, keyof ListRequest>]: never; }>(base?: I | undefined): ListRequest;
     fromPartial<I_1 extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         NotificationID?: number | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         NotificationID?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof ListRequest>]: never; }>(object: I_1): ListRequest;
 };
@@ -588,17 +588,17 @@ export declare const ReadRequest: {
     fromJSON(object: any): ReadRequest;
     toJSON(message: ReadRequest): unknown;
     create<I extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Key?: string[] | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Key?: (string[] & string[] & { [K in Exclude<keyof I["Key"], keyof string[]>]: never; }) | undefined;
     } & { [K_1 in Exclude<keyof I, keyof ReadRequest>]: never; }>(base?: I | undefined): ReadRequest;
     fromPartial<I_1 extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Key?: string[] | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Key?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["Key"], keyof string[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof ReadRequest>]: never; }>(object: I_1): ReadRequest;
 };
@@ -608,15 +608,15 @@ export declare const ReadAllRequest: {
     fromJSON(object: any): ReadAllRequest;
     toJSON(message: ReadAllRequest): unknown;
     create<I extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
     } & {
-        AccountID?: string | undefined;
-    } & { [K in Exclude<keyof I, "AccountID">]: never; }>(base?: I | undefined): ReadAllRequest;
+        RecipientID?: string | undefined;
+    } & { [K in Exclude<keyof I, "RecipientID">]: never; }>(base?: I | undefined): ReadAllRequest;
     fromPartial<I_1 extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
     } & {
-        AccountID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, "AccountID">]: never; }>(object: I_1): ReadAllRequest;
+        RecipientID?: string | undefined;
+    } & { [K_1 in Exclude<keyof I_1, "RecipientID">]: never; }>(object: I_1): ReadAllRequest;
 };
 export declare const Notification: {
     encode(message: Notification, writer?: _m0.Writer): _m0.Writer;

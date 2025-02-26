@@ -24,7 +24,7 @@ message TopRequest {
 }
 
 message UnreadRequest {
-    string AccountID = 1;
+    string RecipientID = 1;
 }
 
 message UnreadResponse {
@@ -32,7 +32,7 @@ message UnreadResponse {
 }
 
 message ListRequest {
-    string AccountID = 1;
+    string RecipientID = 1;
     int64 NotificationID = 2;
 }
 
@@ -47,12 +47,12 @@ message More {
 }
 
 message ReadRequest {
-    string AccountID = 1;
+    string RecipientID = 1;
     repeated string Key = 2;
 }
 
 message ReadAllRequest {
-    string AccountID = 1;
+    string RecipientID = 1;
 }
 
 // Notifications can be high level: Give me NFT Like notifications on my NFTs, or low level: Let me know when collection XYZ is updated
