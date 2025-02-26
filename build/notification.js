@@ -158,12 +158,12 @@ export const Exist = {
     },
 };
 function createBaseTopRequest() {
-    return { AccountID: "", Type: [] };
+    return { RecipientID: "", Type: [] };
 }
 export const TopRequest = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.AccountID !== "") {
-            writer.uint32(10).string(message.AccountID);
+        if (message.RecipientID !== "") {
+            writer.uint32(10).string(message.RecipientID);
         }
         writer.uint32(18).fork();
         for (const v of message.Type) {
@@ -183,7 +183,7 @@ export const TopRequest = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
                 case 2:
                     if (tag === 16) {
@@ -208,15 +208,15 @@ export const TopRequest = {
     },
     fromJSON(object) {
         return {
-            AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+            RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             Type: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Type) ? object.Type.map((e) => notificationTypeFromJSON(e)) : [],
         };
     },
     toJSON(message) {
         var _a;
         const obj = {};
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== "") {
+            obj.RecipientID = message.RecipientID;
         }
         if ((_a = message.Type) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Type = message.Type.map((e) => notificationTypeToJSON(e));
@@ -229,7 +229,7 @@ export const TopRequest = {
     fromPartial(object) {
         var _a, _b;
         const message = createBaseTopRequest();
-        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
+        message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.Type = ((_b = object.Type) === null || _b === void 0 ? void 0 : _b.map((e) => e)) || [];
         return message;
     },
@@ -662,7 +662,7 @@ export const ReadAllRequest = {
 function createBaseNotification() {
     return {
         ID: "",
-        AccountID: "",
+        RecipientID: undefined,
         Type: 0,
         Message: undefined,
         CreatedAt: undefined,
@@ -675,7 +675,6 @@ function createBaseNotification() {
         ExpiresAt: undefined,
         ValidFrom: undefined,
         Key: "",
-        OrganizationID: undefined,
     };
 }
 export const Notification = {
@@ -683,8 +682,8 @@ export const Notification = {
         if (message.ID !== "") {
             writer.uint32(10).string(message.ID);
         }
-        if (message.AccountID !== "") {
-            writer.uint32(18).string(message.AccountID);
+        if (message.RecipientID !== undefined) {
+            writer.uint32(18).string(message.RecipientID);
         }
         if (message.Type !== 0) {
             writer.uint32(24).int32(message.Type);
@@ -724,9 +723,6 @@ export const Notification = {
         if (message.Key !== "") {
             writer.uint32(122).string(message.Key);
         }
-        if (message.OrganizationID !== undefined) {
-            writer.uint32(130).string(message.OrganizationID);
-        }
         return writer;
     },
     decode(input, length) {
@@ -746,7 +742,7 @@ export const Notification = {
                     if (tag !== 18) {
                         break;
                     }
-                    message.AccountID = reader.string();
+                    message.RecipientID = reader.string();
                     continue;
                 case 3:
                     if (tag !== 24) {
@@ -827,12 +823,6 @@ export const Notification = {
                     }
                     message.Key = reader.string();
                     continue;
-                case 16:
-                    if (tag !== 130) {
-                        break;
-                    }
-                    message.OrganizationID = reader.string();
-                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -844,7 +834,7 @@ export const Notification = {
     fromJSON(object) {
         return {
             ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-            AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
+            RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : undefined,
             Type: isSet(object.Type) ? notificationTypeFromJSON(object.Type) : 0,
             Message: isSet(object.Message) ? Message.fromJSON(object.Message) : undefined,
             CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
@@ -857,7 +847,6 @@ export const Notification = {
             ExpiresAt: isSet(object.ExpiresAt) ? fromJsonTimestamp(object.ExpiresAt) : undefined,
             ValidFrom: isSet(object.ValidFrom) ? fromJsonTimestamp(object.ValidFrom) : undefined,
             Key: isSet(object.Key) ? globalThis.String(object.Key) : "",
-            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
         };
     },
     toJSON(message) {
@@ -866,8 +855,8 @@ export const Notification = {
         if (message.ID !== "") {
             obj.ID = message.ID;
         }
-        if (message.AccountID !== "") {
-            obj.AccountID = message.AccountID;
+        if (message.RecipientID !== undefined) {
+            obj.RecipientID = message.RecipientID;
         }
         if (message.Type !== 0) {
             obj.Type = notificationTypeToJSON(message.Type);
@@ -905,19 +894,16 @@ export const Notification = {
         if (message.Key !== "") {
             obj.Key = message.Key;
         }
-        if (message.OrganizationID !== undefined) {
-            obj.OrganizationID = message.OrganizationID;
-        }
         return obj;
     },
     create(base) {
         return Notification.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const message = createBaseNotification();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
-        message.AccountID = (_b = object.AccountID) !== null && _b !== void 0 ? _b : "";
+        message.RecipientID = (_b = object.RecipientID) !== null && _b !== void 0 ? _b : undefined;
         message.Type = (_c = object.Type) !== null && _c !== void 0 ? _c : 0;
         message.Message = (object.Message !== undefined && object.Message !== null)
             ? Message.fromPartial(object.Message)
@@ -932,7 +918,6 @@ export const Notification = {
         message.ExpiresAt = (_l = object.ExpiresAt) !== null && _l !== void 0 ? _l : undefined;
         message.ValidFrom = (_m = object.ValidFrom) !== null && _m !== void 0 ? _m : undefined;
         message.Key = (_o = object.Key) !== null && _o !== void 0 ? _o : "";
-        message.OrganizationID = (_p = object.OrganizationID) !== null && _p !== void 0 ? _p : undefined;
         return message;
     },
 };

@@ -20,7 +20,7 @@ export interface Exist {
     Exists: boolean;
 }
 export interface TopRequest {
-    AccountID: string;
+    RecipientID: string;
     Type: NotificationType[];
 }
 export interface UnreadRequest {
@@ -55,7 +55,8 @@ export interface ReadAllRequest {
 export interface Notification {
     /** Has a meaning if combined with the Type */
     ID: string;
-    AccountID: string;
+    /** Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all */
+    RecipientID?: string | undefined;
     Type: NotificationType;
     Message: Message | undefined;
     CreatedAt: Date | undefined;
@@ -76,8 +77,6 @@ export interface Notification {
     ValidFrom: Date | undefined;
     /** Unique sender generated stable key (prevents duplicate notifications) */
     Key: string;
-    /** For group specific notifications */
-    OrganizationID?: string | undefined;
 }
 export interface Message {
     Format: Format;
@@ -123,17 +122,17 @@ export declare const TopRequest: {
     fromJSON(object: any): TopRequest;
     toJSON(message: TopRequest): unknown;
     create<I extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType[] | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: (NotificationType[] & NotificationType[] & { [K in Exclude<keyof I["Type"], keyof NotificationType[]>]: never; }) | undefined;
     } & { [K_1 in Exclude<keyof I, keyof TopRequest>]: never; }>(base?: I | undefined): TopRequest;
     fromPartial<I_1 extends {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType[] | undefined;
     } & {
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: (NotificationType[] & NotificationType[] & { [K_2 in Exclude<keyof I_1["Type"], keyof NotificationType[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof TopRequest>]: never; }>(object: I_1): TopRequest;
 };
@@ -197,7 +196,7 @@ export declare const Notifications: {
     create<I extends {
         Notification?: {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -222,7 +221,6 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -231,7 +229,7 @@ export declare const Notifications: {
     } & {
         Notification?: ({
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -256,10 +254,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -284,10 +281,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: ({
                 Format?: Format | undefined;
@@ -345,10 +341,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         } & { [K_4 in Exclude<keyof I["Notification"][number], keyof Notification>]: never; })[] & { [K_5 in Exclude<keyof I["Notification"], keyof {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -373,7 +368,6 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -386,7 +380,7 @@ export declare const Notifications: {
     fromPartial<I_1 extends {
         Notification?: {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -411,7 +405,6 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -420,7 +413,7 @@ export declare const Notifications: {
     } & {
         Notification?: ({
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -445,10 +438,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -473,10 +465,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: ({
                 Format?: Format | undefined;
@@ -534,10 +525,9 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         } & { [K_12 in Exclude<keyof I_1["Notification"][number], keyof Notification>]: never; })[] & { [K_13 in Exclude<keyof I_1["Notification"], keyof {
             ID?: string | undefined;
-            AccountID?: string | undefined;
+            RecipientID?: string | undefined;
             Type?: NotificationType | undefined;
             Message?: {
                 Format?: Format | undefined;
@@ -562,7 +552,6 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
-            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -636,7 +625,7 @@ export declare const Notification: {
     toJSON(message: Notification): unknown;
     create<I extends {
         ID?: string | undefined;
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType | undefined;
         Message?: {
             Format?: Format | undefined;
@@ -661,10 +650,9 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
-        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType | undefined;
         Message?: ({
             Format?: Format | undefined;
@@ -722,11 +710,10 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
-        OrganizationID?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof Notification>]: never; }>(base?: I | undefined): Notification;
     fromPartial<I_1 extends {
         ID?: string | undefined;
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType | undefined;
         Message?: {
             Format?: Format | undefined;
@@ -751,10 +738,9 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
-        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
-        AccountID?: string | undefined;
+        RecipientID?: string | undefined;
         Type?: NotificationType | undefined;
         Message?: ({
             Format?: Format | undefined;
@@ -812,7 +798,6 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
-        OrganizationID?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof Notification>]: never; }>(object: I_1): Notification;
 };
 export declare const Message: {
