@@ -675,6 +675,7 @@ function createBaseNotification() {
         ExpiresAt: undefined,
         ValidFrom: undefined,
         Key: "",
+        OrganizationID: undefined,
     };
 }
 export const Notification = {
@@ -722,6 +723,9 @@ export const Notification = {
         }
         if (message.Key !== "") {
             writer.uint32(122).string(message.Key);
+        }
+        if (message.OrganizationID !== undefined) {
+            writer.uint32(130).string(message.OrganizationID);
         }
         return writer;
     },
@@ -823,6 +827,12 @@ export const Notification = {
                     }
                     message.Key = reader.string();
                     continue;
+                case 16:
+                    if (tag !== 130) {
+                        break;
+                    }
+                    message.OrganizationID = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -847,6 +857,7 @@ export const Notification = {
             ExpiresAt: isSet(object.ExpiresAt) ? fromJsonTimestamp(object.ExpiresAt) : undefined,
             ValidFrom: isSet(object.ValidFrom) ? fromJsonTimestamp(object.ValidFrom) : undefined,
             Key: isSet(object.Key) ? globalThis.String(object.Key) : "",
+            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
         };
     },
     toJSON(message) {
@@ -894,13 +905,16 @@ export const Notification = {
         if (message.Key !== "") {
             obj.Key = message.Key;
         }
+        if (message.OrganizationID !== undefined) {
+            obj.OrganizationID = message.OrganizationID;
+        }
         return obj;
     },
     create(base) {
         return Notification.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const message = createBaseNotification();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.AccountID = (_b = object.AccountID) !== null && _b !== void 0 ? _b : "";
@@ -918,6 +932,7 @@ export const Notification = {
         message.ExpiresAt = (_l = object.ExpiresAt) !== null && _l !== void 0 ? _l : undefined;
         message.ValidFrom = (_m = object.ValidFrom) !== null && _m !== void 0 ? _m : undefined;
         message.Key = (_o = object.Key) !== null && _o !== void 0 ? _o : "";
+        message.OrganizationID = (_p = object.OrganizationID) !== null && _p !== void 0 ? _p : undefined;
         return message;
     },
 };

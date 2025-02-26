@@ -76,6 +76,8 @@ export interface Notification {
     ValidFrom: Date | undefined;
     /** Unique sender generated stable key (prevents duplicate notifications) */
     Key: string;
+    /** For group specific notifications */
+    OrganizationID?: string | undefined;
 }
 export interface Message {
     Format: Format;
@@ -220,6 +222,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -253,6 +256,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -280,6 +284,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -340,6 +345,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_4 in Exclude<keyof I["Notification"][number], keyof Notification>]: never; })[] & { [K_5 in Exclude<keyof I["Notification"], keyof {
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -367,6 +373,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -404,6 +411,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -437,6 +445,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -464,6 +473,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -524,6 +534,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_12 in Exclude<keyof I_1["Notification"][number], keyof Notification>]: never; })[] & { [K_13 in Exclude<keyof I_1["Notification"], keyof {
             ID?: string | undefined;
             AccountID?: string | undefined;
@@ -551,6 +562,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -649,6 +661,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
         AccountID?: string | undefined;
@@ -709,6 +722,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof Notification>]: never; }>(base?: I | undefined): Notification;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -737,6 +751,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
         AccountID?: string | undefined;
@@ -797,6 +812,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof Notification>]: never; }>(object: I_1): Notification;
 };
 export declare const Message: {
