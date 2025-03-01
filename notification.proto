@@ -21,6 +21,7 @@ message Exist {
 message TopRequest {
     string RecipientID = 1;
     repeated notification.types.NotificationType Type = 2;
+    optional string OrganizationID = 3;
 }
 
 message UnreadRequest {
@@ -31,9 +32,14 @@ message UnreadResponse {
     bool HasUnread = 1;
 }
 
+// ListRequest defines the filters for fetching notifications:
+//  - if neither OrganizationID nor RecipientID is provided, the request is for syste-wide notifications (sologenic_admin notifications)
+//  - if only OrganizationID is provided, the request is for an organization's notifications + system-wide notifications
+//  - if both OrganizationID and RecipientID are provided, the request is for an individual user's notifications + user's organization notifications + system-wide notifications
 message ListRequest {
-    string RecipientID = 1;
+    optional string RecipientID = 1;
     int64 NotificationID = 2;
+    optional string OrganizationID = 3;
 }
 
 message Notifications {

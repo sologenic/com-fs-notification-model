@@ -22,6 +22,7 @@ export interface Exist {
 export interface TopRequest {
     RecipientID: string;
     Type: NotificationType[];
+    OrganizationID?: string | undefined;
 }
 export interface UnreadRequest {
     RecipientID: string;
@@ -29,9 +30,16 @@ export interface UnreadRequest {
 export interface UnreadResponse {
     HasUnread: boolean;
 }
+/**
+ * ListRequest defines the filters for fetching notifications:
+ *  - if neither OrganizationID nor RecipientID is provided, the request is for syste-wide notifications (sologenic_admin notifications)
+ *  - if only OrganizationID is provided, the request is for an organization's notifications + system-wide notifications
+ *  - if both OrganizationID and RecipientID are provided, the request is for an individual user's notifications + user's organization notifications + system-wide notifications
+ */
 export interface ListRequest {
-    RecipientID: string;
+    RecipientID?: string | undefined;
     NotificationID: number;
+    OrganizationID?: string | undefined;
 }
 export interface Notifications {
     Notification: Notification[];
@@ -124,16 +132,20 @@ export declare const TopRequest: {
     create<I extends {
         RecipientID?: string | undefined;
         Type?: NotificationType[] | undefined;
+        OrganizationID?: string | undefined;
     } & {
         RecipientID?: string | undefined;
         Type?: (NotificationType[] & NotificationType[] & { [K in Exclude<keyof I["Type"], keyof NotificationType[]>]: never; }) | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof TopRequest>]: never; }>(base?: I | undefined): TopRequest;
     fromPartial<I_1 extends {
         RecipientID?: string | undefined;
         Type?: NotificationType[] | undefined;
+        OrganizationID?: string | undefined;
     } & {
         RecipientID?: string | undefined;
         Type?: (NotificationType[] & NotificationType[] & { [K_2 in Exclude<keyof I_1["Type"], keyof NotificationType[]>]: never; }) | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof TopRequest>]: never; }>(object: I_1): TopRequest;
 };
 export declare const UnreadRequest: {
@@ -176,16 +188,20 @@ export declare const ListRequest: {
     create<I extends {
         RecipientID?: string | undefined;
         NotificationID?: number | undefined;
+        OrganizationID?: string | undefined;
     } & {
         RecipientID?: string | undefined;
         NotificationID?: number | undefined;
+        OrganizationID?: string | undefined;
     } & { [K in Exclude<keyof I, keyof ListRequest>]: never; }>(base?: I | undefined): ListRequest;
     fromPartial<I_1 extends {
         RecipientID?: string | undefined;
         NotificationID?: number | undefined;
+        OrganizationID?: string | undefined;
     } & {
         RecipientID?: string | undefined;
         NotificationID?: number | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof ListRequest>]: never; }>(object: I_1): ListRequest;
 };
 export declare const Notifications: {
