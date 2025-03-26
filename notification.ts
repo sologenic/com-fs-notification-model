@@ -85,7 +85,7 @@ export interface More {
 export interface Notification {
   /** Has a meaning if combined with the Type */
   ID: string;
-  /** Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all */
+  /** Recipient is either a user or an admin */
   RecipientID?: string | undefined;
   Type: NotificationType;
   Message: Message | undefined;
@@ -113,6 +113,7 @@ export interface Notification {
     | undefined;
   /** Unique sender generated stable key (prevents duplicate notifications) */
   Key: string;
+  OrganizationID: string;
 }
 
 export interface Message {
@@ -402,6 +403,7 @@ function createBaseNotification(): Notification {
     ExpiresAt: undefined,
     ValidFrom: undefined,
     Key: "",
+    OrganizationID: "",
   };
 }
 
@@ -450,6 +452,9 @@ export const Notification = {
     }
     if (message.Key !== "") {
       writer.uint32(122).string(message.Key);
+    }
+    if (message.OrganizationID !== "") {
+      writer.uint32(130).string(message.OrganizationID);
     }
     return writer;
   },
@@ -569,6 +574,13 @@ export const Notification = {
 
           message.Key = reader.string();
           continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.OrganizationID = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -594,6 +606,7 @@ export const Notification = {
       ExpiresAt: isSet(object.ExpiresAt) ? fromJsonTimestamp(object.ExpiresAt) : undefined,
       ValidFrom: isSet(object.ValidFrom) ? fromJsonTimestamp(object.ValidFrom) : undefined,
       Key: isSet(object.Key) ? globalThis.String(object.Key) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
     };
   },
 
@@ -641,6 +654,9 @@ export const Notification = {
     if (message.Key !== "") {
       obj.Key = message.Key;
     }
+    if (message.OrganizationID !== "") {
+      obj.OrganizationID = message.OrganizationID;
+    }
     return obj;
   },
 
@@ -665,6 +681,7 @@ export const Notification = {
     message.ExpiresAt = object.ExpiresAt ?? undefined;
     message.ValidFrom = object.ValidFrom ?? undefined;
     message.Key = object.Key ?? "";
+    message.OrganizationID = object.OrganizationID ?? "";
     return message;
   },
 };

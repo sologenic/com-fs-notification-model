@@ -32,7 +32,7 @@ message More {
 // The absence or presence of the ID field determines the level of notification
 message Notification {
     string ID = 1; // Has a meaning if combined with the Type
-    optional string RecipientID = 2; // Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all
+    optional string RecipientID = 2; // Recipient is either a user or an admin
     notification.types.NotificationType Type = 3;
     Message Message = 4;
     google.protobuf.Timestamp CreatedAt = 5;
@@ -45,6 +45,7 @@ message Notification {
     google.protobuf.Timestamp ExpiresAt = 13; // Default none, used for admin/system/marketing notifications so those can be filtered
     google.protobuf.Timestamp ValidFrom = 14; // Default none, used for admin/system/marketing notifications so those can be filtered
     string Key = 15; // Unique sender generated stable key (prevents duplicate notifications)
+    string OrganizationID = 16;
 }
 
 message Message {
