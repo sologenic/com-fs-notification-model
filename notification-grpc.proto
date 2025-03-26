@@ -34,6 +34,7 @@ message TopRequest {
 
 message UnreadRequest {
     string RecipientID = 1;
+    optional string OrganizationID = 2;
 }
 
 // ListRequest defines the filters for fetching notifications:
@@ -49,10 +50,12 @@ message ListRequest {
 message ReadRequest {
     string RecipientID = 1;
     repeated string Key = 2;
+    string OrganizationID = 3;
 }
 
 message ReadAllRequest {
     string RecipientID = 1;
+    string OrganizationID = 2;
 }
 
 message Key {
