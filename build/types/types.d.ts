@@ -10,10 +10,10 @@ export declare enum NotificationType {
     Admin = 2,
     Marketing = 3,
     IndividualMessage = 4,
-    AccountBanned = 5,
-    AccountVerified = 6,
+    Account = 5,
+    User = 6,
     KYC = 7,
-    NewOrganization = 8,
+    Organization = 8,
     UNRECOGNIZED = -1
 }
 export declare function notificationTypeFromJSON(object: any): NotificationType;
