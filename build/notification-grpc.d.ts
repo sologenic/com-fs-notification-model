@@ -28,11 +28,11 @@ export interface ListRequest {
 export interface ReadRequest {
     RecipientID: string;
     Key: string[];
-    OrganizationID: string;
+    OrganizationID?: string | undefined;
 }
 export interface ReadAllRequest {
     RecipientID: string;
-    OrganizationID: string;
+    OrganizationID?: string | undefined;
 }
 export interface Key {
     Key: string;

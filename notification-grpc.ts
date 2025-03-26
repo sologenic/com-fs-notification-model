@@ -51,12 +51,12 @@ export interface ListRequest {
 export interface ReadRequest {
   RecipientID: string;
   Key: string[];
-  OrganizationID: string;
+  OrganizationID?: string | undefined;
 }
 
 export interface ReadAllRequest {
   RecipientID: string;
-  OrganizationID: string;
+  OrganizationID?: string | undefined;
 }
 
 export interface Key {
@@ -328,7 +328,7 @@ export const ListRequest = {
 };
 
 function createBaseReadRequest(): ReadRequest {
-  return { RecipientID: "", Key: [], OrganizationID: "" };
+  return { RecipientID: "", Key: [], OrganizationID: undefined };
 }
 
 export const ReadRequest = {
@@ -339,7 +339,7 @@ export const ReadRequest = {
     for (const v of message.Key) {
       writer.uint32(18).string(v!);
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       writer.uint32(26).string(message.OrganizationID);
     }
     return writer;
@@ -386,7 +386,7 @@ export const ReadRequest = {
     return {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
       Key: globalThis.Array.isArray(object?.Key) ? object.Key.map((e: any) => globalThis.String(e)) : [],
-      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
     };
   },
 
@@ -398,7 +398,7 @@ export const ReadRequest = {
     if (message.Key?.length) {
       obj.Key = message.Key;
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
     return obj;
@@ -411,13 +411,13 @@ export const ReadRequest = {
     const message = createBaseReadRequest();
     message.RecipientID = object.RecipientID ?? "";
     message.Key = object.Key?.map((e) => e) || [];
-    message.OrganizationID = object.OrganizationID ?? "";
+    message.OrganizationID = object.OrganizationID ?? undefined;
     return message;
   },
 };
 
 function createBaseReadAllRequest(): ReadAllRequest {
-  return { RecipientID: "", OrganizationID: "" };
+  return { RecipientID: "", OrganizationID: undefined };
 }
 
 export const ReadAllRequest = {
@@ -425,7 +425,7 @@ export const ReadAllRequest = {
     if (message.RecipientID !== "") {
       writer.uint32(10).string(message.RecipientID);
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       writer.uint32(18).string(message.OrganizationID);
     }
     return writer;
@@ -464,7 +464,7 @@ export const ReadAllRequest = {
   fromJSON(object: any): ReadAllRequest {
     return {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
-      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
     };
   },
 
@@ -473,7 +473,7 @@ export const ReadAllRequest = {
     if (message.RecipientID !== "") {
       obj.RecipientID = message.RecipientID;
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
     return obj;
@@ -485,7 +485,7 @@ export const ReadAllRequest = {
   fromPartial<I extends Exact<DeepPartial<ReadAllRequest>, I>>(object: I): ReadAllRequest {
     const message = createBaseReadAllRequest();
     message.RecipientID = object.RecipientID ?? "";
-    message.OrganizationID = object.OrganizationID ?? "";
+    message.OrganizationID = object.OrganizationID ?? undefined;
     return message;
   },
 };
