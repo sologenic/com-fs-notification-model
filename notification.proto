@@ -10,36 +10,12 @@ import "types/types.proto";
 import "parameters/parameters.proto";
 import "formats/formats.proto";
 
-message Key {
-    string Key = 1;
-}
-
 message Exist {
     bool Exists = 1;
 }
 
-message TopRequest {
-    string RecipientID = 1;
-    repeated notification.types.NotificationType Type = 2;
-    optional string OrganizationID = 3;
-}
-
-message UnreadRequest {
-    string RecipientID = 1;
-}
-
 message UnreadResponse {
     bool HasUnread = 1;
-}
-
-// ListRequest defines the filters for fetching notifications:
-//  - if neither OrganizationID nor RecipientID is provided, the request is for syste-wide notifications (sologenic_admin notifications)
-//  - if only OrganizationID is provided, the request is for an organization's notifications + system-wide notifications
-//  - if both OrganizationID and RecipientID are provided, the request is for an individual user's notifications + user's organization notifications + system-wide notifications
-message ListRequest {
-    optional string RecipientID = 1;
-    int64 NotificationID = 2;
-    optional string OrganizationID = 3;
 }
 
 message Notifications {
@@ -52,20 +28,11 @@ message More {
     int64 TS = 2;
 }
 
-message ReadRequest {
-    string RecipientID = 1;
-    repeated string Key = 2;
-}
-
-message ReadAllRequest {
-    string RecipientID = 1;
-}
-
 // Notifications can be high level: Give me NFT Like notifications on my NFTs, or low level: Let me know when collection XYZ is updated
 // The absence or presence of the ID field determines the level of notification
 message Notification {
     string ID = 1; // Has a meaning if combined with the Type
-    optional string RecipientID = 2; // Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all
+    optional string RecipientID = 2; // Recipient is either a user or an admin
     notification.types.NotificationType Type = 3;
     Message Message = 4;
     google.protobuf.Timestamp CreatedAt = 5;
@@ -78,6 +45,7 @@ message Notification {
     google.protobuf.Timestamp ExpiresAt = 13; // Default none, used for admin/system/marketing notifications so those can be filtered
     google.protobuf.Timestamp ValidFrom = 14; // Default none, used for admin/system/marketing notifications so those can be filtered
     string Key = 15; // Unique sender generated stable key (prevents duplicate notifications)
+    optional string OrganizationID = 16; // Only the sologenic admin can create notifications with no organization ID
 }
 
 message Message {

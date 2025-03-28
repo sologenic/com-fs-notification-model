@@ -13,33 +13,11 @@ export declare enum Importance {
 }
 export declare function importanceFromJSON(object: any): Importance;
 export declare function importanceToJSON(object: Importance): string;
-export interface Key {
-    Key: string;
-}
 export interface Exist {
     Exists: boolean;
 }
-export interface TopRequest {
-    RecipientID: string;
-    Type: NotificationType[];
-    OrganizationID?: string | undefined;
-}
-export interface UnreadRequest {
-    RecipientID: string;
-}
 export interface UnreadResponse {
     HasUnread: boolean;
-}
-/**
- * ListRequest defines the filters for fetching notifications:
- *  - if neither OrganizationID nor RecipientID is provided, the request is for syste-wide notifications (sologenic_admin notifications)
- *  - if only OrganizationID is provided, the request is for an organization's notifications + system-wide notifications
- *  - if both OrganizationID and RecipientID are provided, the request is for an individual user's notifications + user's organization notifications + system-wide notifications
- */
-export interface ListRequest {
-    RecipientID?: string | undefined;
-    NotificationID: number;
-    OrganizationID?: string | undefined;
 }
 export interface Notifications {
     Notification: Notification[];
@@ -49,13 +27,6 @@ export interface More {
     ID: number;
     TS: number;
 }
-export interface ReadRequest {
-    RecipientID: string;
-    Key: string[];
-}
-export interface ReadAllRequest {
-    RecipientID: string;
-}
 /**
  * Notifications can be high level: Give me NFT Like notifications on my NFTs, or low level: Let me know when collection XYZ is updated
  * The absence or presence of the ID field determines the level of notification
@@ -63,7 +34,7 @@ export interface ReadAllRequest {
 export interface Notification {
     /** Has a meaning if combined with the Type */
     ID: string;
-    /** Recipient is either an account or an organization (AccountID or OrganizationID), or if not set, for all */
+    /** Recipient is either a user or an admin */
     RecipientID?: string | undefined;
     Type: NotificationType;
     Message: Message | undefined;
@@ -85,6 +56,8 @@ export interface Notification {
     ValidFrom: Date | undefined;
     /** Unique sender generated stable key (prevents duplicate notifications) */
     Key: string;
+    /** Only the sologenic admin can create notifications with no organization ID */
+    OrganizationID?: string | undefined;
 }
 export interface Message {
     Format: Format;
@@ -92,22 +65,6 @@ export interface Message {
     Body: string;
     Parameter: Parameter[];
 }
-export declare const Key: {
-    encode(message: Key, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): Key;
-    fromJSON(object: any): Key;
-    toJSON(message: Key): unknown;
-    create<I extends {
-        Key?: string | undefined;
-    } & {
-        Key?: string | undefined;
-    } & { [K in Exclude<keyof I, "Key">]: never; }>(base?: I | undefined): Key;
-    fromPartial<I_1 extends {
-        Key?: string | undefined;
-    } & {
-        Key?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, "Key">]: never; }>(object: I_1): Key;
-};
 export declare const Exist: {
     encode(message: Exist, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): Exist;
@@ -124,46 +81,6 @@ export declare const Exist: {
         Exists?: boolean | undefined;
     } & { [K_1 in Exclude<keyof I_1, "Exists">]: never; }>(object: I_1): Exist;
 };
-export declare const TopRequest: {
-    encode(message: TopRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): TopRequest;
-    fromJSON(object: any): TopRequest;
-    toJSON(message: TopRequest): unknown;
-    create<I extends {
-        RecipientID?: string | undefined;
-        Type?: NotificationType[] | undefined;
-        OrganizationID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        Type?: (NotificationType[] & NotificationType[] & { [K in Exclude<keyof I["Type"], keyof NotificationType[]>]: never; }) | undefined;
-        OrganizationID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof TopRequest>]: never; }>(base?: I | undefined): TopRequest;
-    fromPartial<I_1 extends {
-        RecipientID?: string | undefined;
-        Type?: NotificationType[] | undefined;
-        OrganizationID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        Type?: (NotificationType[] & NotificationType[] & { [K_2 in Exclude<keyof I_1["Type"], keyof NotificationType[]>]: never; }) | undefined;
-        OrganizationID?: string | undefined;
-    } & { [K_3 in Exclude<keyof I_1, keyof TopRequest>]: never; }>(object: I_1): TopRequest;
-};
-export declare const UnreadRequest: {
-    encode(message: UnreadRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): UnreadRequest;
-    fromJSON(object: any): UnreadRequest;
-    toJSON(message: UnreadRequest): unknown;
-    create<I extends {
-        RecipientID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-    } & { [K in Exclude<keyof I, "RecipientID">]: never; }>(base?: I | undefined): UnreadRequest;
-    fromPartial<I_1 extends {
-        RecipientID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, "RecipientID">]: never; }>(object: I_1): UnreadRequest;
-};
 export declare const UnreadResponse: {
     encode(message: UnreadResponse, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): UnreadResponse;
@@ -179,30 +96,6 @@ export declare const UnreadResponse: {
     } & {
         HasUnread?: boolean | undefined;
     } & { [K_1 in Exclude<keyof I_1, "HasUnread">]: never; }>(object: I_1): UnreadResponse;
-};
-export declare const ListRequest: {
-    encode(message: ListRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ListRequest;
-    fromJSON(object: any): ListRequest;
-    toJSON(message: ListRequest): unknown;
-    create<I extends {
-        RecipientID?: string | undefined;
-        NotificationID?: number | undefined;
-        OrganizationID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        NotificationID?: number | undefined;
-        OrganizationID?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof ListRequest>]: never; }>(base?: I | undefined): ListRequest;
-    fromPartial<I_1 extends {
-        RecipientID?: string | undefined;
-        NotificationID?: number | undefined;
-        OrganizationID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        NotificationID?: number | undefined;
-        OrganizationID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof ListRequest>]: never; }>(object: I_1): ListRequest;
 };
 export declare const Notifications: {
     encode(message: Notifications, writer?: _m0.Writer): _m0.Writer;
@@ -237,6 +130,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -270,6 +164,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -297,6 +192,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -357,6 +253,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_4 in Exclude<keyof I["Notification"][number], keyof Notification>]: never; })[] & { [K_5 in Exclude<keyof I["Notification"], keyof {
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -384,6 +281,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -421,6 +319,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
         More?: {
             ID?: number | undefined;
@@ -454,6 +353,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -481,6 +381,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & {
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -541,6 +442,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_12 in Exclude<keyof I_1["Notification"][number], keyof Notification>]: never; })[] & { [K_13 in Exclude<keyof I_1["Notification"], keyof {
             ID?: string | undefined;
             RecipientID?: string | undefined;
@@ -568,6 +470,7 @@ export declare const Notifications: {
             ExpiresAt?: Date | undefined;
             ValidFrom?: Date | undefined;
             Key?: string | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
         More?: ({
             ID?: number | undefined;
@@ -597,42 +500,6 @@ export declare const More: {
         ID?: number | undefined;
         TS?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof More>]: never; }>(object: I_1): More;
-};
-export declare const ReadRequest: {
-    encode(message: ReadRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ReadRequest;
-    fromJSON(object: any): ReadRequest;
-    toJSON(message: ReadRequest): unknown;
-    create<I extends {
-        RecipientID?: string | undefined;
-        Key?: string[] | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        Key?: (string[] & string[] & { [K in Exclude<keyof I["Key"], keyof string[]>]: never; }) | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof ReadRequest>]: never; }>(base?: I | undefined): ReadRequest;
-    fromPartial<I_1 extends {
-        RecipientID?: string | undefined;
-        Key?: string[] | undefined;
-    } & {
-        RecipientID?: string | undefined;
-        Key?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["Key"], keyof string[]>]: never; }) | undefined;
-    } & { [K_3 in Exclude<keyof I_1, keyof ReadRequest>]: never; }>(object: I_1): ReadRequest;
-};
-export declare const ReadAllRequest: {
-    encode(message: ReadAllRequest, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ReadAllRequest;
-    fromJSON(object: any): ReadAllRequest;
-    toJSON(message: ReadAllRequest): unknown;
-    create<I extends {
-        RecipientID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-    } & { [K in Exclude<keyof I, "RecipientID">]: never; }>(base?: I | undefined): ReadAllRequest;
-    fromPartial<I_1 extends {
-        RecipientID?: string | undefined;
-    } & {
-        RecipientID?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, "RecipientID">]: never; }>(object: I_1): ReadAllRequest;
 };
 export declare const Notification: {
     encode(message: Notification, writer?: _m0.Writer): _m0.Writer;
@@ -666,6 +533,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
         RecipientID?: string | undefined;
@@ -726,6 +594,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof Notification>]: never; }>(base?: I | undefined): Notification;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -754,6 +623,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & {
         ID?: string | undefined;
         RecipientID?: string | undefined;
@@ -814,6 +684,7 @@ export declare const Notification: {
         ExpiresAt?: Date | undefined;
         ValidFrom?: Date | undefined;
         Key?: string | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof Notification>]: never; }>(object: I_1): Notification;
 };
 export declare const Message: {
