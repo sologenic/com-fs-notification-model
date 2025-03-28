@@ -63,6 +63,7 @@ export declare enum FromTo {
 }
 export declare function fromToFromJSON(object: any): FromTo;
 export declare function fromToToJSON(object: FromTo): string;
+/** TODO: update ParameterLabel and SourceType after discussion */
 export interface Parameter {
     Label: ParameterLabel;
     Value: string;
