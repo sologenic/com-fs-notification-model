@@ -4,7 +4,6 @@ package notification.parameters;
 
 option go_package = "github.com/sologenic/com-fs-notification-model/parameters";
 
-// TODO: update ParameterLabel and SourceType after discussion
 message Parameter {
     ParameterLabel Label = 1;
     string Value = 2;
