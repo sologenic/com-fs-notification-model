@@ -45,7 +45,7 @@ message Notification {
     google.protobuf.Timestamp ExpiresAt = 13; // Default none, used for admin/system/marketing notifications so those can be filtered
     google.protobuf.Timestamp ValidFrom = 14; // Default none, used for admin/system/marketing notifications so those can be filtered
     string Key = 15; // Unique sender generated stable key (prevents duplicate notifications)
-    string OrganizationID = 16;
+    optional string OrganizationID = 16; // Only the sologenic admin can create notifications with no organization ID
 }
 
 message Message {

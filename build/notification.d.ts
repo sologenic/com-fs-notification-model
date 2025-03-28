@@ -56,7 +56,8 @@ export interface Notification {
     ValidFrom: Date | undefined;
     /** Unique sender generated stable key (prevents duplicate notifications) */
     Key: string;
-    OrganizationID: string;
+    /** Only the sologenic admin can create notifications with no organization ID */
+    OrganizationID?: string | undefined;
 }
 export interface Message {
     Format: Format;

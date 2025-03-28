@@ -310,7 +310,7 @@ function createBaseNotification() {
         ExpiresAt: undefined,
         ValidFrom: undefined,
         Key: "",
-        OrganizationID: "",
+        OrganizationID: undefined,
     };
 }
 export const Notification = {
@@ -359,7 +359,7 @@ export const Notification = {
         if (message.Key !== "") {
             writer.uint32(122).string(message.Key);
         }
-        if (message.OrganizationID !== "") {
+        if (message.OrganizationID !== undefined) {
             writer.uint32(130).string(message.OrganizationID);
         }
         return writer;
@@ -492,7 +492,7 @@ export const Notification = {
             ExpiresAt: isSet(object.ExpiresAt) ? fromJsonTimestamp(object.ExpiresAt) : undefined,
             ValidFrom: isSet(object.ValidFrom) ? fromJsonTimestamp(object.ValidFrom) : undefined,
             Key: isSet(object.Key) ? globalThis.String(object.Key) : "",
-            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
         };
     },
     toJSON(message) {
@@ -540,7 +540,7 @@ export const Notification = {
         if (message.Key !== "") {
             obj.Key = message.Key;
         }
-        if (message.OrganizationID !== "") {
+        if (message.OrganizationID !== undefined) {
             obj.OrganizationID = message.OrganizationID;
         }
         return obj;
@@ -567,7 +567,7 @@ export const Notification = {
         message.ExpiresAt = (_l = object.ExpiresAt) !== null && _l !== void 0 ? _l : undefined;
         message.ValidFrom = (_m = object.ValidFrom) !== null && _m !== void 0 ? _m : undefined;
         message.Key = (_o = object.Key) !== null && _o !== void 0 ? _o : "";
-        message.OrganizationID = (_p = object.OrganizationID) !== null && _p !== void 0 ? _p : "";
+        message.OrganizationID = (_p = object.OrganizationID) !== null && _p !== void 0 ? _p : undefined;
         return message;
     },
 };

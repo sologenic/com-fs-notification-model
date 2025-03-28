@@ -12,7 +12,7 @@ export interface TopRequest {
 }
 export interface UnreadRequest {
     RecipientID: string;
-    OrganizationID?: string | undefined;
+    OrganizationID: string;
 }
 /**
  * ListRequest defines the filters for fetching notifications:
@@ -28,11 +28,11 @@ export interface ListRequest {
 export interface ReadRequest {
     RecipientID: string;
     Key: string[];
-    OrganizationID?: string | undefined;
+    OrganizationID: string;
 }
 export interface ReadAllRequest {
     RecipientID: string;
-    OrganizationID?: string | undefined;
+    OrganizationID: string;
 }
 export interface Key {
     Key: string;

@@ -113,7 +113,8 @@ export interface Notification {
     | undefined;
   /** Unique sender generated stable key (prevents duplicate notifications) */
   Key: string;
-  OrganizationID: string;
+  /** Only the sologenic admin can create notifications with no organization ID */
+  OrganizationID?: string | undefined;
 }
 
 export interface Message {
@@ -403,7 +404,7 @@ function createBaseNotification(): Notification {
     ExpiresAt: undefined,
     ValidFrom: undefined,
     Key: "",
-    OrganizationID: "",
+    OrganizationID: undefined,
   };
 }
 
@@ -453,7 +454,7 @@ export const Notification = {
     if (message.Key !== "") {
       writer.uint32(122).string(message.Key);
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       writer.uint32(130).string(message.OrganizationID);
     }
     return writer;
@@ -606,7 +607,7 @@ export const Notification = {
       ExpiresAt: isSet(object.ExpiresAt) ? fromJsonTimestamp(object.ExpiresAt) : undefined,
       ValidFrom: isSet(object.ValidFrom) ? fromJsonTimestamp(object.ValidFrom) : undefined,
       Key: isSet(object.Key) ? globalThis.String(object.Key) : "",
-      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
     };
   },
 
@@ -654,7 +655,7 @@ export const Notification = {
     if (message.Key !== "") {
       obj.Key = message.Key;
     }
-    if (message.OrganizationID !== "") {
+    if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
     return obj;
@@ -681,7 +682,7 @@ export const Notification = {
     message.ExpiresAt = object.ExpiresAt ?? undefined;
     message.ValidFrom = object.ValidFrom ?? undefined;
     message.Key = object.Key ?? "";
-    message.OrganizationID = object.OrganizationID ?? "";
+    message.OrganizationID = object.OrganizationID ?? undefined;
     return message;
   },
 };
