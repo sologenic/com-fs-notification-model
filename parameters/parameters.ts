@@ -15,6 +15,8 @@ export enum SourceType {
   ADDRESS = 1,
   WALLET = 2,
   KYC = 3,
+  COMMENT = 4,
+  SUPPORT_TICKET = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -32,6 +34,12 @@ export function sourceTypeFromJSON(object: any): SourceType {
     case 3:
     case "KYC":
       return SourceType.KYC;
+    case 4:
+    case "COMMENT":
+      return SourceType.COMMENT;
+    case 5:
+    case "SUPPORT_TICKET":
+      return SourceType.SUPPORT_TICKET;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -49,6 +57,10 @@ export function sourceTypeToJSON(object: SourceType): string {
       return "WALLET";
     case SourceType.KYC:
       return "KYC";
+    case SourceType.COMMENT:
+      return "COMMENT";
+    case SourceType.SUPPORT_TICKET:
+      return "SUPPORT_TICKET";
     case SourceType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -104,14 +116,16 @@ export function targetToJSON(object: Target): string {
 export enum ParameterLabel {
   /** NOT_USED3 - Need unique enum values for proto (C requirement, we don't use C) */
   NOT_USED3 = 0,
-  DATETIME = 1,
-  AMOUNT = 2,
-  INITIATOR = 3,
-  DESTINATION = 4,
   /** ID - Generically usable ID field */
-  ID = 5,
+  ID = 1,
+  /** DESCRIPTION - Generically usable DESCRIPTION field */
+  DESCRIPTION = 2,
+  DESTINATION = 3,
+  DATETIME = 50,
+  AMOUNT = 51,
+  INITIATOR = 52,
   /** NAME - Generically usable NAME field */
-  NAME = 6,
+  NAME = 54,
   UNRECOGNIZED = -1,
 }
 
@@ -121,21 +135,24 @@ export function parameterLabelFromJSON(object: any): ParameterLabel {
     case "NOT_USED3":
       return ParameterLabel.NOT_USED3;
     case 1:
-    case "DATETIME":
-      return ParameterLabel.DATETIME;
-    case 2:
-    case "AMOUNT":
-      return ParameterLabel.AMOUNT;
-    case 3:
-    case "INITIATOR":
-      return ParameterLabel.INITIATOR;
-    case 4:
-    case "DESTINATION":
-      return ParameterLabel.DESTINATION;
-    case 5:
     case "ID":
       return ParameterLabel.ID;
-    case 6:
+    case 2:
+    case "DESCRIPTION":
+      return ParameterLabel.DESCRIPTION;
+    case 3:
+    case "DESTINATION":
+      return ParameterLabel.DESTINATION;
+    case 50:
+    case "DATETIME":
+      return ParameterLabel.DATETIME;
+    case 51:
+    case "AMOUNT":
+      return ParameterLabel.AMOUNT;
+    case 52:
+    case "INITIATOR":
+      return ParameterLabel.INITIATOR;
+    case 54:
     case "NAME":
       return ParameterLabel.NAME;
     case -1:
@@ -149,16 +166,18 @@ export function parameterLabelToJSON(object: ParameterLabel): string {
   switch (object) {
     case ParameterLabel.NOT_USED3:
       return "NOT_USED3";
+    case ParameterLabel.ID:
+      return "ID";
+    case ParameterLabel.DESCRIPTION:
+      return "DESCRIPTION";
+    case ParameterLabel.DESTINATION:
+      return "DESTINATION";
     case ParameterLabel.DATETIME:
       return "DATETIME";
     case ParameterLabel.AMOUNT:
       return "AMOUNT";
     case ParameterLabel.INITIATOR:
       return "INITIATOR";
-    case ParameterLabel.DESTINATION:
-      return "DESTINATION";
-    case ParameterLabel.ID:
-      return "ID";
     case ParameterLabel.NAME:
       return "NAME";
     case ParameterLabel.UNRECOGNIZED:

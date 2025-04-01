@@ -6,6 +6,8 @@ export declare enum SourceType {
     ADDRESS = 1,
     WALLET = 2,
     KYC = 3,
+    COMMENT = 4,
+    SUPPORT_TICKET = 5,
     UNRECOGNIZED = -1
 }
 export declare function sourceTypeFromJSON(object: any): SourceType;
@@ -23,14 +25,16 @@ export declare function targetToJSON(object: Target): string;
 export declare enum ParameterLabel {
     /** NOT_USED3 - Need unique enum values for proto (C requirement, we don't use C) */
     NOT_USED3 = 0,
-    DATETIME = 1,
-    AMOUNT = 2,
-    INITIATOR = 3,
-    DESTINATION = 4,
     /** ID - Generically usable ID field */
-    ID = 5,
+    ID = 1,
+    /** DESCRIPTION - Generically usable DESCRIPTION field */
+    DESCRIPTION = 2,
+    DESTINATION = 3,
+    DATETIME = 50,
+    AMOUNT = 51,
+    INITIATOR = 52,
     /** NAME - Generically usable NAME field */
-    NAME = 6,
+    NAME = 54,
     UNRECOGNIZED = -1
 }
 export declare function parameterLabelFromJSON(object: any): ParameterLabel;

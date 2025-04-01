@@ -13,6 +13,8 @@ export var SourceType;
     SourceType[SourceType["ADDRESS"] = 1] = "ADDRESS";
     SourceType[SourceType["WALLET"] = 2] = "WALLET";
     SourceType[SourceType["KYC"] = 3] = "KYC";
+    SourceType[SourceType["COMMENT"] = 4] = "COMMENT";
+    SourceType[SourceType["SUPPORT_TICKET"] = 5] = "SUPPORT_TICKET";
     SourceType[SourceType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(SourceType || (SourceType = {}));
 export function sourceTypeFromJSON(object) {
@@ -29,6 +31,12 @@ export function sourceTypeFromJSON(object) {
         case 3:
         case "KYC":
             return SourceType.KYC;
+        case 4:
+        case "COMMENT":
+            return SourceType.COMMENT;
+        case 5:
+        case "SUPPORT_TICKET":
+            return SourceType.SUPPORT_TICKET;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -45,6 +53,10 @@ export function sourceTypeToJSON(object) {
             return "WALLET";
         case SourceType.KYC:
             return "KYC";
+        case SourceType.COMMENT:
+            return "COMMENT";
+        case SourceType.SUPPORT_TICKET:
+            return "SUPPORT_TICKET";
         case SourceType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
@@ -98,14 +110,16 @@ export var ParameterLabel;
 (function (ParameterLabel) {
     /** NOT_USED3 - Need unique enum values for proto (C requirement, we don't use C) */
     ParameterLabel[ParameterLabel["NOT_USED3"] = 0] = "NOT_USED3";
-    ParameterLabel[ParameterLabel["DATETIME"] = 1] = "DATETIME";
-    ParameterLabel[ParameterLabel["AMOUNT"] = 2] = "AMOUNT";
-    ParameterLabel[ParameterLabel["INITIATOR"] = 3] = "INITIATOR";
-    ParameterLabel[ParameterLabel["DESTINATION"] = 4] = "DESTINATION";
     /** ID - Generically usable ID field */
-    ParameterLabel[ParameterLabel["ID"] = 5] = "ID";
+    ParameterLabel[ParameterLabel["ID"] = 1] = "ID";
+    /** DESCRIPTION - Generically usable DESCRIPTION field */
+    ParameterLabel[ParameterLabel["DESCRIPTION"] = 2] = "DESCRIPTION";
+    ParameterLabel[ParameterLabel["DESTINATION"] = 3] = "DESTINATION";
+    ParameterLabel[ParameterLabel["DATETIME"] = 50] = "DATETIME";
+    ParameterLabel[ParameterLabel["AMOUNT"] = 51] = "AMOUNT";
+    ParameterLabel[ParameterLabel["INITIATOR"] = 52] = "INITIATOR";
     /** NAME - Generically usable NAME field */
-    ParameterLabel[ParameterLabel["NAME"] = 6] = "NAME";
+    ParameterLabel[ParameterLabel["NAME"] = 54] = "NAME";
     ParameterLabel[ParameterLabel["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(ParameterLabel || (ParameterLabel = {}));
 export function parameterLabelFromJSON(object) {
@@ -114,21 +128,24 @@ export function parameterLabelFromJSON(object) {
         case "NOT_USED3":
             return ParameterLabel.NOT_USED3;
         case 1:
-        case "DATETIME":
-            return ParameterLabel.DATETIME;
-        case 2:
-        case "AMOUNT":
-            return ParameterLabel.AMOUNT;
-        case 3:
-        case "INITIATOR":
-            return ParameterLabel.INITIATOR;
-        case 4:
-        case "DESTINATION":
-            return ParameterLabel.DESTINATION;
-        case 5:
         case "ID":
             return ParameterLabel.ID;
-        case 6:
+        case 2:
+        case "DESCRIPTION":
+            return ParameterLabel.DESCRIPTION;
+        case 3:
+        case "DESTINATION":
+            return ParameterLabel.DESTINATION;
+        case 50:
+        case "DATETIME":
+            return ParameterLabel.DATETIME;
+        case 51:
+        case "AMOUNT":
+            return ParameterLabel.AMOUNT;
+        case 52:
+        case "INITIATOR":
+            return ParameterLabel.INITIATOR;
+        case 54:
         case "NAME":
             return ParameterLabel.NAME;
         case -1:
@@ -141,16 +158,18 @@ export function parameterLabelToJSON(object) {
     switch (object) {
         case ParameterLabel.NOT_USED3:
             return "NOT_USED3";
+        case ParameterLabel.ID:
+            return "ID";
+        case ParameterLabel.DESCRIPTION:
+            return "DESCRIPTION";
+        case ParameterLabel.DESTINATION:
+            return "DESTINATION";
         case ParameterLabel.DATETIME:
             return "DATETIME";
         case ParameterLabel.AMOUNT:
             return "AMOUNT";
         case ParameterLabel.INITIATOR:
             return "INITIATOR";
-        case ParameterLabel.DESTINATION:
-            return "DESTINATION";
-        case ParameterLabel.ID:
-            return "ID";
         case ParameterLabel.NAME:
             return "NAME";
         case ParameterLabel.UNRECOGNIZED:
