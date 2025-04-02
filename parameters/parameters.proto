@@ -35,10 +35,12 @@ enum ParameterLabel {
     DESCRIPTION = 2; // Generically usable DESCRIPTION field
     DESTINATION = 3;
 
-    DATETIME = 50;
-    AMOUNT = 51;
-    INITIATOR  = 52;
-    NAME = 54; // Generically usable NAME field
+    CURRENCY = 50;
+    MARKET = 51;
+    DATETIME = 52;
+    AMOUNT = 53;
+    INITIATOR  = 54;
+    NAME = 55; // Generically usable NAME field
 }
 
 // Parameter types for DataEvaluation: Sadly enums have to be unique, and we want to use an enum here to limit input/settings

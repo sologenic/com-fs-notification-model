@@ -115,11 +115,13 @@ export var ParameterLabel;
     /** DESCRIPTION - Generically usable DESCRIPTION field */
     ParameterLabel[ParameterLabel["DESCRIPTION"] = 2] = "DESCRIPTION";
     ParameterLabel[ParameterLabel["DESTINATION"] = 3] = "DESTINATION";
-    ParameterLabel[ParameterLabel["DATETIME"] = 50] = "DATETIME";
-    ParameterLabel[ParameterLabel["AMOUNT"] = 51] = "AMOUNT";
-    ParameterLabel[ParameterLabel["INITIATOR"] = 52] = "INITIATOR";
+    ParameterLabel[ParameterLabel["CURRENCY"] = 50] = "CURRENCY";
+    ParameterLabel[ParameterLabel["MARKET"] = 51] = "MARKET";
+    ParameterLabel[ParameterLabel["DATETIME"] = 52] = "DATETIME";
+    ParameterLabel[ParameterLabel["AMOUNT"] = 53] = "AMOUNT";
+    ParameterLabel[ParameterLabel["INITIATOR"] = 54] = "INITIATOR";
     /** NAME - Generically usable NAME field */
-    ParameterLabel[ParameterLabel["NAME"] = 54] = "NAME";
+    ParameterLabel[ParameterLabel["NAME"] = 55] = "NAME";
     ParameterLabel[ParameterLabel["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(ParameterLabel || (ParameterLabel = {}));
 export function parameterLabelFromJSON(object) {
@@ -137,15 +139,21 @@ export function parameterLabelFromJSON(object) {
         case "DESTINATION":
             return ParameterLabel.DESTINATION;
         case 50:
+        case "CURRENCY":
+            return ParameterLabel.CURRENCY;
+        case 51:
+        case "MARKET":
+            return ParameterLabel.MARKET;
+        case 52:
         case "DATETIME":
             return ParameterLabel.DATETIME;
-        case 51:
+        case 53:
         case "AMOUNT":
             return ParameterLabel.AMOUNT;
-        case 52:
+        case 54:
         case "INITIATOR":
             return ParameterLabel.INITIATOR;
-        case 54:
+        case 55:
         case "NAME":
             return ParameterLabel.NAME;
         case -1:
@@ -164,6 +172,10 @@ export function parameterLabelToJSON(object) {
             return "DESCRIPTION";
         case ParameterLabel.DESTINATION:
             return "DESTINATION";
+        case ParameterLabel.CURRENCY:
+            return "CURRENCY";
+        case ParameterLabel.MARKET:
+            return "MARKET";
         case ParameterLabel.DATETIME:
             return "DATETIME";
         case ParameterLabel.AMOUNT:

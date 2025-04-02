@@ -121,11 +121,13 @@ export enum ParameterLabel {
   /** DESCRIPTION - Generically usable DESCRIPTION field */
   DESCRIPTION = 2,
   DESTINATION = 3,
-  DATETIME = 50,
-  AMOUNT = 51,
-  INITIATOR = 52,
+  CURRENCY = 50,
+  MARKET = 51,
+  DATETIME = 52,
+  AMOUNT = 53,
+  INITIATOR = 54,
   /** NAME - Generically usable NAME field */
-  NAME = 54,
+  NAME = 55,
   UNRECOGNIZED = -1,
 }
 
@@ -144,15 +146,21 @@ export function parameterLabelFromJSON(object: any): ParameterLabel {
     case "DESTINATION":
       return ParameterLabel.DESTINATION;
     case 50:
+    case "CURRENCY":
+      return ParameterLabel.CURRENCY;
+    case 51:
+    case "MARKET":
+      return ParameterLabel.MARKET;
+    case 52:
     case "DATETIME":
       return ParameterLabel.DATETIME;
-    case 51:
+    case 53:
     case "AMOUNT":
       return ParameterLabel.AMOUNT;
-    case 52:
+    case 54:
     case "INITIATOR":
       return ParameterLabel.INITIATOR;
-    case 54:
+    case 55:
     case "NAME":
       return ParameterLabel.NAME;
     case -1:
@@ -172,6 +180,10 @@ export function parameterLabelToJSON(object: ParameterLabel): string {
       return "DESCRIPTION";
     case ParameterLabel.DESTINATION:
       return "DESTINATION";
+    case ParameterLabel.CURRENCY:
+      return "CURRENCY";
+    case ParameterLabel.MARKET:
+      return "MARKET";
     case ParameterLabel.DATETIME:
       return "DATETIME";
     case ParameterLabel.AMOUNT:

@@ -30,11 +30,13 @@ export declare enum ParameterLabel {
     /** DESCRIPTION - Generically usable DESCRIPTION field */
     DESCRIPTION = 2,
     DESTINATION = 3,
-    DATETIME = 50,
-    AMOUNT = 51,
-    INITIATOR = 52,
+    CURRENCY = 50,
+    MARKET = 51,
+    DATETIME = 52,
+    AMOUNT = 53,
+    INITIATOR = 54,
     /** NAME - Generically usable NAME field */
-    NAME = 54,
+    NAME = 55,
     UNRECOGNIZED = -1
 }
 export declare function parameterLabelFromJSON(object: any): ParameterLabel;
