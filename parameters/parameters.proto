@@ -18,6 +18,8 @@ enum SourceType {
     ADDRESS = 1;
     WALLET = 2;
     KYC = 3;
+    COMMENT = 4;
+    SUPPORT_TICKET = 5;
 }
 
 enum Target {
@@ -29,12 +31,16 @@ enum Target {
 
 enum ParameterLabel {
     NOT_USED3 = 0; // Need unique enum values for proto (C requirement, we don't use C)
-    DATETIME = 1;
-    AMOUNT = 2;
-    INITIATOR  = 3;
-    DESTINATION = 4;
-    ID = 5; // Generically usable ID field
-    NAME = 6; // Generically usable NAME field
+    ID = 1; // Generically usable ID field
+    DESCRIPTION = 2; // Generically usable DESCRIPTION field
+    DESTINATION = 3;
+
+    CURRENCY = 50;
+    MARKET = 51;
+    DATETIME = 52;
+    AMOUNT = 53;
+    INITIATOR  = 54;
+    NAME = 55; // Generically usable NAME field
 }
 
 // Parameter types for DataEvaluation: Sadly enums have to be unique, and we want to use an enum here to limit input/settings

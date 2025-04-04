@@ -23,6 +23,7 @@ export enum NotificationType {
   User = 6,
   KYC = 7,
   Organization = 8,
+  SupportTicket = 9,
   UNRECOGNIZED = -1,
 }
 
@@ -55,6 +56,9 @@ export function notificationTypeFromJSON(object: any): NotificationType {
     case 8:
     case "Organization":
       return NotificationType.Organization;
+    case 9:
+    case "SupportTicket":
+      return NotificationType.SupportTicket;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -82,6 +86,8 @@ export function notificationTypeToJSON(object: NotificationType): string {
       return "KYC";
     case NotificationType.Organization:
       return "Organization";
+    case NotificationType.SupportTicket:
+      return "SupportTicket";
     case NotificationType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

@@ -51,11 +51,11 @@ func AdminKey(notificationType notificationtypes.NotificationType, notificationI
 	if notificationID == 0 {
 		notificationID = time.Now().UnixNano()
 	}
-	return fmt.Sprintf("%d-%d", notificationType, notificationID), notificationID
+	return fmt.Sprintf("%d_%d", notificationType, notificationID), notificationID
 }
 
 func AccountKey(notificationType notificationtypes.NotificationType, reference, accountID string) string {
-	return fmt.Sprintf("%d-%s-%s", notificationType, reference, accountID)
+	return fmt.Sprintf("%d_%s_%s", notificationType, reference, accountID)
 }
 
 // Return key and required notificationID. Set notificationID in the message (if not set)

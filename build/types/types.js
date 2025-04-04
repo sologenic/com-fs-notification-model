@@ -21,6 +21,7 @@ export var NotificationType;
     NotificationType[NotificationType["User"] = 6] = "User";
     NotificationType[NotificationType["KYC"] = 7] = "KYC";
     NotificationType[NotificationType["Organization"] = 8] = "Organization";
+    NotificationType[NotificationType["SupportTicket"] = 9] = "SupportTicket";
     NotificationType[NotificationType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(NotificationType || (NotificationType = {}));
 export function notificationTypeFromJSON(object) {
@@ -52,6 +53,9 @@ export function notificationTypeFromJSON(object) {
         case 8:
         case "Organization":
             return NotificationType.Organization;
+        case 9:
+        case "SupportTicket":
+            return NotificationType.SupportTicket;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -78,6 +82,8 @@ export function notificationTypeToJSON(object) {
             return "KYC";
         case NotificationType.Organization:
             return "Organization";
+        case NotificationType.SupportTicket:
+            return "SupportTicket";
         case NotificationType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
