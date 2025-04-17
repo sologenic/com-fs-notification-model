@@ -8,7 +8,6 @@ import { makeGenericClientConstructor, } from "@grpc/grpc-js";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Empty } from "./google/protobuf/Empty";
-import { Timestamp } from "./google/protobuf/timestamp";
 import { Exist, Notification, Notifications, UnreadResponse } from "./notification";
 import { notificationTypeFromJSON, notificationTypeToJSON } from "./types/types";
 export const protobufPackage = "notification";
@@ -29,7 +28,7 @@ export const TopRequest = {
             writer.uint32(26).string(message.OrganizationID);
         }
         if (message.From !== undefined) {
-            Timestamp.encode(toTimestamp(message.From), writer.uint32(34).fork()).ldelim();
+            writer.uint32(32).int64(message.From);
         }
         return writer;
     },
@@ -66,10 +65,10 @@ export const TopRequest = {
                     message.OrganizationID = reader.string();
                     continue;
                 case 4:
-                    if (tag !== 34) {
+                    if (tag !== 32) {
                         break;
                     }
-                    message.From = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    message.From = longToNumber(reader.int64());
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -84,7 +83,7 @@ export const TopRequest = {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             Type: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Type) ? object.Type.map((e) => notificationTypeFromJSON(e)) : [],
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
-            From: isSet(object.From) ? fromJsonTimestamp(object.From) : undefined,
+            From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -100,7 +99,7 @@ export const TopRequest = {
             obj.OrganizationID = message.OrganizationID;
         }
         if (message.From !== undefined) {
-            obj.From = message.From.toISOString();
+            obj.From = Math.round(message.From);
         }
         return obj;
     },
@@ -185,7 +184,7 @@ export const UnreadRequest = {
     },
 };
 function createBaseListRequest() {
-    return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined };
+    return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined, From: undefined };
 }
 export const ListRequest = {
     encode(message, writer = _m0.Writer.create()) {
@@ -197,6 +196,9 @@ export const ListRequest = {
         }
         if (message.OrganizationID !== undefined) {
             writer.uint32(26).string(message.OrganizationID);
+        }
+        if (message.From !== undefined) {
+            writer.uint32(32).int64(message.From);
         }
         return writer;
     },
@@ -225,6 +227,12 @@ export const ListRequest = {
                     }
                     message.OrganizationID = reader.string();
                     continue;
+                case 4:
+                    if (tag !== 32) {
+                        break;
+                    }
+                    message.From = longToNumber(reader.int64());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -238,6 +246,7 @@ export const ListRequest = {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : undefined,
             NotificationID: isSet(object.NotificationID) ? globalThis.Number(object.NotificationID) : 0,
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+            From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -251,17 +260,21 @@ export const ListRequest = {
         if (message.OrganizationID !== undefined) {
             obj.OrganizationID = message.OrganizationID;
         }
+        if (message.From !== undefined) {
+            obj.From = Math.round(message.From);
+        }
         return obj;
     },
     create(base) {
         return ListRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const message = createBaseListRequest();
         message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : undefined;
         message.NotificationID = (_b = object.NotificationID) !== null && _b !== void 0 ? _b : 0;
         message.OrganizationID = (_c = object.OrganizationID) !== null && _c !== void 0 ? _c : undefined;
+        message.From = (_d = object.From) !== null && _d !== void 0 ? _d : undefined;
         return message;
     },
 };
@@ -538,27 +551,6 @@ export const NotificationServiceService = {
     },
 };
 export const NotificationServiceClient = makeGenericClientConstructor(NotificationServiceService, "notification.NotificationService");
-function toTimestamp(date) {
-    const seconds = Math.trunc(date.getTime() / 1000);
-    const nanos = (date.getTime() % 1000) * 1000000;
-    return { seconds, nanos };
-}
-function fromTimestamp(t) {
-    let millis = (t.seconds || 0) * 1000;
-    millis += (t.nanos || 0) / 1000000;
-    return new globalThis.Date(millis);
-}
-function fromJsonTimestamp(o) {
-    if (o instanceof globalThis.Date) {
-        return o;
-    }
-    else if (typeof o === "string") {
-        return new globalThis.Date(o);
-    }
-    else {
-        return fromTimestamp(Timestamp.fromJSON(o));
-    }
-}
 function longToNumber(long) {
     if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
         throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
