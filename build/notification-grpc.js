@@ -8,11 +8,12 @@ import { makeGenericClientConstructor, } from "@grpc/grpc-js";
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Empty } from "./google/protobuf/Empty";
+import { Timestamp } from "./google/protobuf/timestamp";
 import { Exist, Notification, Notifications, UnreadResponse } from "./notification";
 import { notificationTypeFromJSON, notificationTypeToJSON } from "./types/types";
 export const protobufPackage = "notification";
 function createBaseTopRequest() {
-    return { RecipientID: "", Type: [], OrganizationID: undefined };
+    return { RecipientID: "", Type: [], OrganizationID: undefined, From: undefined };
 }
 export const TopRequest = {
     encode(message, writer = _m0.Writer.create()) {
@@ -26,6 +27,9 @@ export const TopRequest = {
         writer.ldelim();
         if (message.OrganizationID !== undefined) {
             writer.uint32(26).string(message.OrganizationID);
+        }
+        if (message.From !== undefined) {
+            Timestamp.encode(toTimestamp(message.From), writer.uint32(34).fork()).ldelim();
         }
         return writer;
     },
@@ -61,6 +65,12 @@ export const TopRequest = {
                     }
                     message.OrganizationID = reader.string();
                     continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.From = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -74,6 +84,7 @@ export const TopRequest = {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             Type: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Type) ? object.Type.map((e) => notificationTypeFromJSON(e)) : [],
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+            From: isSet(object.From) ? fromJsonTimestamp(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -88,17 +99,21 @@ export const TopRequest = {
         if (message.OrganizationID !== undefined) {
             obj.OrganizationID = message.OrganizationID;
         }
+        if (message.From !== undefined) {
+            obj.From = message.From.toISOString();
+        }
         return obj;
     },
     create(base) {
         return TopRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const message = createBaseTopRequest();
         message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.Type = ((_b = object.Type) === null || _b === void 0 ? void 0 : _b.map((e) => e)) || [];
         message.OrganizationID = (_c = object.OrganizationID) !== null && _c !== void 0 ? _c : undefined;
+        message.From = (_d = object.From) !== null && _d !== void 0 ? _d : undefined;
         return message;
     },
 };
@@ -523,6 +538,27 @@ export const NotificationServiceService = {
     },
 };
 export const NotificationServiceClient = makeGenericClientConstructor(NotificationServiceService, "notification.NotificationService");
+function toTimestamp(date) {
+    const seconds = Math.trunc(date.getTime() / 1000);
+    const nanos = (date.getTime() % 1000) * 1000000;
+    return { seconds, nanos };
+}
+function fromTimestamp(t) {
+    let millis = (t.seconds || 0) * 1000;
+    millis += (t.nanos || 0) / 1000000;
+    return new globalThis.Date(millis);
+}
+function fromJsonTimestamp(o) {
+    if (o instanceof globalThis.Date) {
+        return o;
+    }
+    else if (typeof o === "string") {
+        return new globalThis.Date(o);
+    }
+    else {
+        return fromTimestamp(Timestamp.fromJSON(o));
+    }
+}
 function longToNumber(long) {
     if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
         throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");

@@ -7,6 +7,7 @@ option go_package = "./notification";
 import "google/protobuf/Empty.proto";
 import "types/types.proto";
 import "notification.proto";
+import "google/protobuf/timestamp.proto";
 
 service NotificationService {
     // Retrieval
@@ -30,6 +31,8 @@ message TopRequest {
     string RecipientID = 1;
     repeated notification.types.NotificationType Type = 2;
     optional string OrganizationID = 3;
+    // Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created.
+    optional google.protobuf.Timestamp From = 4;
 }
 
 message UnreadRequest {

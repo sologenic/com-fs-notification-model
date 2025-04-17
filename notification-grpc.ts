@@ -20,6 +20,7 @@ import {
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Empty } from "./google/protobuf/Empty";
+import { Timestamp } from "./google/protobuf/timestamp";
 import { Exist, Notification, Notifications, UnreadResponse } from "./notification";
 import { NotificationType, notificationTypeFromJSON, notificationTypeToJSON } from "./types/types";
 
@@ -28,7 +29,11 @@ export const protobufPackage = "notification";
 export interface TopRequest {
   RecipientID: string;
   Type: NotificationType[];
-  OrganizationID?: string | undefined;
+  OrganizationID?:
+    | string
+    | undefined;
+  /** Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created. */
+  From?: Date | undefined;
 }
 
 export interface UnreadRequest {
@@ -64,7 +69,7 @@ export interface Key {
 }
 
 function createBaseTopRequest(): TopRequest {
-  return { RecipientID: "", Type: [], OrganizationID: undefined };
+  return { RecipientID: "", Type: [], OrganizationID: undefined, From: undefined };
 }
 
 export const TopRequest = {
@@ -79,6 +84,9 @@ export const TopRequest = {
     writer.ldelim();
     if (message.OrganizationID !== undefined) {
       writer.uint32(26).string(message.OrganizationID);
+    }
+    if (message.From !== undefined) {
+      Timestamp.encode(toTimestamp(message.From), writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -121,6 +129,13 @@ export const TopRequest = {
 
           message.OrganizationID = reader.string();
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.From = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -135,6 +150,7 @@ export const TopRequest = {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
       Type: globalThis.Array.isArray(object?.Type) ? object.Type.map((e: any) => notificationTypeFromJSON(e)) : [],
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+      From: isSet(object.From) ? fromJsonTimestamp(object.From) : undefined,
     };
   },
 
@@ -149,6 +165,9 @@ export const TopRequest = {
     if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
+    if (message.From !== undefined) {
+      obj.From = message.From.toISOString();
+    }
     return obj;
   },
 
@@ -160,6 +179,7 @@ export const TopRequest = {
     message.RecipientID = object.RecipientID ?? "";
     message.Type = object.Type?.map((e) => e) || [];
     message.OrganizationID = object.OrganizationID ?? undefined;
+    message.From = object.From ?? undefined;
     return message;
   },
 };
@@ -755,6 +775,28 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = Math.trunc(date.getTime() / 1_000);
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = (t.seconds || 0) * 1_000;
+  millis += (t.nanos || 0) / 1_000_000;
+  return new globalThis.Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof globalThis.Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new globalThis.Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
 
 function longToNumber(long: Long): number {
   if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
