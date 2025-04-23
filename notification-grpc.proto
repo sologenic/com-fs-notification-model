@@ -30,6 +30,8 @@ message TopRequest {
     string RecipientID = 1;
     repeated notification.types.NotificationType Type = 2;
     optional string OrganizationID = 3;
+    // Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created.
+    optional int64 From = 4;
 }
 
 message UnreadRequest {
@@ -45,6 +47,8 @@ message ListRequest {
     optional string RecipientID = 1;
     int64 NotificationID = 2;
     optional string OrganizationID = 3;
+    // Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created.
+    optional int64 From = 4;
 }
 
 message ReadRequest {

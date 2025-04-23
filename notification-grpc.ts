@@ -28,7 +28,11 @@ export const protobufPackage = "notification";
 export interface TopRequest {
   RecipientID: string;
   Type: NotificationType[];
-  OrganizationID?: string | undefined;
+  OrganizationID?:
+    | string
+    | undefined;
+  /** Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created. */
+  From?: number | undefined;
 }
 
 export interface UnreadRequest {
@@ -45,7 +49,11 @@ export interface UnreadRequest {
 export interface ListRequest {
   RecipientID?: string | undefined;
   NotificationID: number;
-  OrganizationID?: string | undefined;
+  OrganizationID?:
+    | string
+    | undefined;
+  /** Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created. */
+  From?: number | undefined;
 }
 
 export interface ReadRequest {
@@ -64,7 +72,7 @@ export interface Key {
 }
 
 function createBaseTopRequest(): TopRequest {
-  return { RecipientID: "", Type: [], OrganizationID: undefined };
+  return { RecipientID: "", Type: [], OrganizationID: undefined, From: undefined };
 }
 
 export const TopRequest = {
@@ -79,6 +87,9 @@ export const TopRequest = {
     writer.ldelim();
     if (message.OrganizationID !== undefined) {
       writer.uint32(26).string(message.OrganizationID);
+    }
+    if (message.From !== undefined) {
+      writer.uint32(32).int64(message.From);
     }
     return writer;
   },
@@ -121,6 +132,13 @@ export const TopRequest = {
 
           message.OrganizationID = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.From = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -135,6 +153,7 @@ export const TopRequest = {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
       Type: globalThis.Array.isArray(object?.Type) ? object.Type.map((e: any) => notificationTypeFromJSON(e)) : [],
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+      From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
     };
   },
 
@@ -149,6 +168,9 @@ export const TopRequest = {
     if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
+    if (message.From !== undefined) {
+      obj.From = Math.round(message.From);
+    }
     return obj;
   },
 
@@ -160,6 +182,7 @@ export const TopRequest = {
     message.RecipientID = object.RecipientID ?? "";
     message.Type = object.Type?.map((e) => e) || [];
     message.OrganizationID = object.OrganizationID ?? undefined;
+    message.From = object.From ?? undefined;
     return message;
   },
 };
@@ -239,7 +262,7 @@ export const UnreadRequest = {
 };
 
 function createBaseListRequest(): ListRequest {
-  return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined };
+  return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined, From: undefined };
 }
 
 export const ListRequest = {
@@ -252,6 +275,9 @@ export const ListRequest = {
     }
     if (message.OrganizationID !== undefined) {
       writer.uint32(26).string(message.OrganizationID);
+    }
+    if (message.From !== undefined) {
+      writer.uint32(32).int64(message.From);
     }
     return writer;
   },
@@ -284,6 +310,13 @@ export const ListRequest = {
 
           message.OrganizationID = reader.string();
           continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.From = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -298,6 +331,7 @@ export const ListRequest = {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : undefined,
       NotificationID: isSet(object.NotificationID) ? globalThis.Number(object.NotificationID) : 0,
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+      From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
     };
   },
 
@@ -312,6 +346,9 @@ export const ListRequest = {
     if (message.OrganizationID !== undefined) {
       obj.OrganizationID = message.OrganizationID;
     }
+    if (message.From !== undefined) {
+      obj.From = Math.round(message.From);
+    }
     return obj;
   },
 
@@ -323,6 +360,7 @@ export const ListRequest = {
     message.RecipientID = object.RecipientID ?? undefined;
     message.NotificationID = object.NotificationID ?? 0;
     message.OrganizationID = object.OrganizationID ?? undefined;
+    message.From = object.From ?? undefined;
     return message;
   },
 };

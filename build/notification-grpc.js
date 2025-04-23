@@ -12,7 +12,7 @@ import { Exist, Notification, Notifications, UnreadResponse } from "./notificati
 import { notificationTypeFromJSON, notificationTypeToJSON } from "./types/types";
 export const protobufPackage = "notification";
 function createBaseTopRequest() {
-    return { RecipientID: "", Type: [], OrganizationID: undefined };
+    return { RecipientID: "", Type: [], OrganizationID: undefined, From: undefined };
 }
 export const TopRequest = {
     encode(message, writer = _m0.Writer.create()) {
@@ -26,6 +26,9 @@ export const TopRequest = {
         writer.ldelim();
         if (message.OrganizationID !== undefined) {
             writer.uint32(26).string(message.OrganizationID);
+        }
+        if (message.From !== undefined) {
+            writer.uint32(32).int64(message.From);
         }
         return writer;
     },
@@ -61,6 +64,12 @@ export const TopRequest = {
                     }
                     message.OrganizationID = reader.string();
                     continue;
+                case 4:
+                    if (tag !== 32) {
+                        break;
+                    }
+                    message.From = longToNumber(reader.int64());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -74,6 +83,7 @@ export const TopRequest = {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             Type: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Type) ? object.Type.map((e) => notificationTypeFromJSON(e)) : [],
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+            From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -88,17 +98,21 @@ export const TopRequest = {
         if (message.OrganizationID !== undefined) {
             obj.OrganizationID = message.OrganizationID;
         }
+        if (message.From !== undefined) {
+            obj.From = Math.round(message.From);
+        }
         return obj;
     },
     create(base) {
         return TopRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const message = createBaseTopRequest();
         message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.Type = ((_b = object.Type) === null || _b === void 0 ? void 0 : _b.map((e) => e)) || [];
         message.OrganizationID = (_c = object.OrganizationID) !== null && _c !== void 0 ? _c : undefined;
+        message.From = (_d = object.From) !== null && _d !== void 0 ? _d : undefined;
         return message;
     },
 };
@@ -170,7 +184,7 @@ export const UnreadRequest = {
     },
 };
 function createBaseListRequest() {
-    return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined };
+    return { RecipientID: undefined, NotificationID: 0, OrganizationID: undefined, From: undefined };
 }
 export const ListRequest = {
     encode(message, writer = _m0.Writer.create()) {
@@ -182,6 +196,9 @@ export const ListRequest = {
         }
         if (message.OrganizationID !== undefined) {
             writer.uint32(26).string(message.OrganizationID);
+        }
+        if (message.From !== undefined) {
+            writer.uint32(32).int64(message.From);
         }
         return writer;
     },
@@ -210,6 +227,12 @@ export const ListRequest = {
                     }
                     message.OrganizationID = reader.string();
                     continue;
+                case 4:
+                    if (tag !== 32) {
+                        break;
+                    }
+                    message.From = longToNumber(reader.int64());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -223,6 +246,7 @@ export const ListRequest = {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : undefined,
             NotificationID: isSet(object.NotificationID) ? globalThis.Number(object.NotificationID) : 0,
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : undefined,
+            From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -236,17 +260,21 @@ export const ListRequest = {
         if (message.OrganizationID !== undefined) {
             obj.OrganizationID = message.OrganizationID;
         }
+        if (message.From !== undefined) {
+            obj.From = Math.round(message.From);
+        }
         return obj;
     },
     create(base) {
         return ListRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const message = createBaseListRequest();
         message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : undefined;
         message.NotificationID = (_b = object.NotificationID) !== null && _b !== void 0 ? _b : 0;
         message.OrganizationID = (_c = object.OrganizationID) !== null && _c !== void 0 ? _c : undefined;
+        message.From = (_d = object.From) !== null && _d !== void 0 ? _d : undefined;
         return message;
     },
 };
