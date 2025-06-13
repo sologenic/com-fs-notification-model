@@ -38,6 +38,8 @@ export interface TopRequest {
 export interface UnreadRequest {
   RecipientID: string;
   OrganizationID: string;
+  /** Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created. */
+  From?: number | undefined;
 }
 
 /**
@@ -188,7 +190,7 @@ export const TopRequest = {
 };
 
 function createBaseUnreadRequest(): UnreadRequest {
-  return { RecipientID: "", OrganizationID: "" };
+  return { RecipientID: "", OrganizationID: "", From: undefined };
 }
 
 export const UnreadRequest = {
@@ -198,6 +200,9 @@ export const UnreadRequest = {
     }
     if (message.OrganizationID !== "") {
       writer.uint32(18).string(message.OrganizationID);
+    }
+    if (message.From !== undefined) {
+      writer.uint32(24).int64(message.From);
     }
     return writer;
   },
@@ -223,6 +228,13 @@ export const UnreadRequest = {
 
           message.OrganizationID = reader.string();
           continue;
+        case 3:
+          if (tag !== 24) {
+            break;
+          }
+
+          message.From = longToNumber(reader.int64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -236,6 +248,7 @@ export const UnreadRequest = {
     return {
       RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+      From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
     };
   },
 
@@ -247,6 +260,9 @@ export const UnreadRequest = {
     if (message.OrganizationID !== "") {
       obj.OrganizationID = message.OrganizationID;
     }
+    if (message.From !== undefined) {
+      obj.From = Math.round(message.From);
+    }
     return obj;
   },
 
@@ -257,6 +273,7 @@ export const UnreadRequest = {
     const message = createBaseUnreadRequest();
     message.RecipientID = object.RecipientID ?? "";
     message.OrganizationID = object.OrganizationID ?? "";
+    message.From = object.From ?? undefined;
     return message;
   },
 };

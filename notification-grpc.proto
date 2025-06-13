@@ -37,6 +37,8 @@ message TopRequest {
 message UnreadRequest {
     string RecipientID = 1;
     string OrganizationID = 2;
+    // Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created.
+    optional int64 From = 3;
 }
 
 // ListRequest defines the filters for fetching notifications:
