@@ -117,7 +117,7 @@ export const TopRequest = {
     },
 };
 function createBaseUnreadRequest() {
-    return { RecipientID: "", OrganizationID: "" };
+    return { RecipientID: "", OrganizationID: "", From: undefined };
 }
 export const UnreadRequest = {
     encode(message, writer = _m0.Writer.create()) {
@@ -126,6 +126,9 @@ export const UnreadRequest = {
         }
         if (message.OrganizationID !== "") {
             writer.uint32(18).string(message.OrganizationID);
+        }
+        if (message.From !== undefined) {
+            writer.uint32(24).int64(message.From);
         }
         return writer;
     },
@@ -148,6 +151,12 @@ export const UnreadRequest = {
                     }
                     message.OrganizationID = reader.string();
                     continue;
+                case 3:
+                    if (tag !== 24) {
+                        break;
+                    }
+                    message.From = longToNumber(reader.int64());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -160,6 +169,7 @@ export const UnreadRequest = {
         return {
             RecipientID: isSet(object.RecipientID) ? globalThis.String(object.RecipientID) : "",
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
+            From: isSet(object.From) ? globalThis.Number(object.From) : undefined,
         };
     },
     toJSON(message) {
@@ -170,16 +180,20 @@ export const UnreadRequest = {
         if (message.OrganizationID !== "") {
             obj.OrganizationID = message.OrganizationID;
         }
+        if (message.From !== undefined) {
+            obj.From = Math.round(message.From);
+        }
         return obj;
     },
     create(base) {
         return UnreadRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b;
+        var _a, _b, _c;
         const message = createBaseUnreadRequest();
         message.RecipientID = (_a = object.RecipientID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
+        message.From = (_c = object.From) !== null && _c !== void 0 ? _c : undefined;
         return message;
     },
 };

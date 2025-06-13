@@ -15,6 +15,8 @@ export interface TopRequest {
 export interface UnreadRequest {
     RecipientID: string;
     OrganizationID: string;
+    /** Used to fetch notifications for a user: fetching broadcast type notifications should be relative to when the user was created. */
+    From?: number | undefined;
 }
 /**
  * ListRequest defines the filters for fetching notifications:
@@ -77,16 +79,20 @@ export declare const UnreadRequest: {
     create<I extends {
         RecipientID?: string | undefined;
         OrganizationID?: string | undefined;
+        From?: number | undefined;
     } & {
         RecipientID?: string | undefined;
         OrganizationID?: string | undefined;
+        From?: number | undefined;
     } & { [K in Exclude<keyof I, keyof UnreadRequest>]: never; }>(base?: I | undefined): UnreadRequest;
     fromPartial<I_1 extends {
         RecipientID?: string | undefined;
         OrganizationID?: string | undefined;
+        From?: number | undefined;
     } & {
         RecipientID?: string | undefined;
         OrganizationID?: string | undefined;
+        From?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof UnreadRequest>]: never; }>(object: I_1): UnreadRequest;
 };
 export declare const ListRequest: {
