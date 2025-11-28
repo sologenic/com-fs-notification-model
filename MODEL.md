@@ -11,6 +11,8 @@
     - [More](#more)
     - [Notification](#notification)
     - [Message](#message)
+  - [Enums](#enums)
+    - [Importance](#importance)
 - [Version Information](#version-information)
 - [Support](#support)
 
@@ -166,6 +168,31 @@ The `Message` message provides message data and operations.
 
 **Important Notes:**
 - This message provides the message representation
+
+### Enums
+
+#### Importance {#importance}
+
+The `Importance` enum defines the possible states or types for notification, allowing for classification and state management.
+
+**Value Table:**
+
+| Value Name | Number | Description |
+|------------|--------|-------------|
+| NOT_USED1 | 0 | Default/unused value (protobuf convention) |
+| NORMAL | 1 | Normal state or type |
+| IMPORTANT | 2 | Important state or type |
+| CRITICAL | 3 | Critical state or type |
+
+**Use Cases:**
+- Setting importance for items
+- Filtering items by importance in queries
+- Enforcing business logic based on importance
+
+**Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
+- Only valid importance values should be used in production code
+- Importance changes should be tracked in audit trails for compliance purposes
 
 ## Version Information
 
