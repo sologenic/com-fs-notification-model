@@ -18,7 +18,7 @@
 
 The Notification provides a comprehensive data structure for managing notification within the system. This model supports identification: provides unique identifiers for notification, organizational context: links items to organizations via organizationid, and more. 
 
-Key features of the {model_name.lower()} model include:
+Key features of the notification model include:
 - **Identification**: Provides unique identifiers for notification
 - **Organizational Context**: Links items to organizations via OrganizationID
 
@@ -121,8 +121,8 @@ The `Notification` message provides notification data and operations.
 | RecipientID | `string` | Optional | Recipient is either a user or an admin |
 | Type | `notification.types.NotificationType` | Required | Type classification for this item (see related enum) |
 | Message | `Message` | Required | Message field |
-| CreatedAt | `google.protobuf.Timestamp` | Required | CreatedAt field |
-| UpdatedAt | `google.protobuf.Timestamp` | Required | UpdatedAt field |
+| CreatedAt | `google.protobuf.Timestamp` | Required | Timestamp information |
+| UpdatedAt | `google.protobuf.Timestamp` | Required | Timestamp information |
 | NotificationID | `int64` | Required | Unique ID used for Read notifications matching. Timestamp in nanos assigned by the storage layer |
 | Read | `bool` | Required | Default false. Used for personal messages read state, merged with Read state from message Read |
 | From | `string` | Required | AccountID of the sender of the message (if applicable) |
@@ -154,10 +154,10 @@ The `Message` message provides message data and operations.
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
-| Format | `notification.formats.Format` | Required | Format field |
+| Format | `notification.formats.Format` | Required | Format information |
 | Subject | `string` | Required | Subject value |
 | Body | `string` | Required | Body value |
-| Parameter | `notification.parameters.Parameter` | Optional | Parameter field |
+| Parameter | `notification.parameters.Parameter` | Optional | Parameter information |
 
 **Use Cases:**
 - Creating new message records
