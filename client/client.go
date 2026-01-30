@@ -4,7 +4,7 @@ import (
 	"context"
 
 	grpcdef "github.com/sologenic/com-fs-notification-model"
-	grpcclient "github.com/sologenic/com-fs-utils-lib/go/grpc-client"
+	grpcclient "github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client"
 )
 
 const endpoint = "NOTIFICATION_STORE"
