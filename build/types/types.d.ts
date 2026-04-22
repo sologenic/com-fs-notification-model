@@ -16,6 +16,7 @@ export declare enum NotificationType {
     Organization = 8,
     SupportTicket = 9,
     Document = 10,
+    Partner = 11,
     UNRECOGNIZED = -1
 }
 export declare function notificationTypeFromJSON(object: any): NotificationType;
