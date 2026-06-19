@@ -7,7 +7,6 @@ export declare enum SourceType {
     WALLET = 2,
     KYC = 3,
     COMMENT = 4,
-    SUPPORT_TICKET = 5,
     UNRECOGNIZED = -1
 }
 export declare function sourceTypeFromJSON(object: any): SourceType;

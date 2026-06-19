@@ -14,7 +14,6 @@ export declare enum NotificationType {
     User = 6,
     KYC = 7,
     Organization = 8,
-    SupportTicket = 9,
     Document = 10,
     Partner = 11,
     UNRECOGNIZED = -1

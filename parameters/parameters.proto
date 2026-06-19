@@ -19,7 +19,6 @@ enum SourceType {
     WALLET = 2;
     KYC = 3;
     COMMENT = 4;
-    SUPPORT_TICKET = 5;
 }
 
 enum Target {
